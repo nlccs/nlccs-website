@@ -1,0 +1,35 @@
+---
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <p class="footer__name">Nederlands Centrum voor Curriculumstudies</p>
+    <p class="footer__copy">&copy; {new Date().getFullYear()} NLCCS</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-primary-dark);
+    color: var(--color-white);
+    padding-block: var(--space-md);
+  }
+
+  .footer__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .footer__name {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .footer__copy {
+    font-size: 0.85rem;
+    opacity: 0.7;
+  }
+</style>

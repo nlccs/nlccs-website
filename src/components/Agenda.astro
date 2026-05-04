@@ -1,0 +1,54 @@
+---
+import EventCard from './EventCard.astro';
+
+const events = [
+  {
+    date: '28 september 2026',
+    title: "Masterclass 'Nieuwe kerndoelen toepassen'",
+    location: 'Vught',
+    slug: 'nieuwe-kerndoelen-toepassen',
+  },
+  {
+    date: '24 november 2026',
+    title: "Masterclass 'GenAI en het onderwijs'",
+    location: 'Dordrecht',
+    slug: 'genai-en-het-onderwijs',
+  },
+  {
+    date: '3 maart 2027',
+    title: "Masterclass 'Onderwijsmatig toetsen'",
+    location: 'Culemborg',
+    slug: 'onderwijsmatig-toetsen',
+  },
+  {
+    date: '20 mei 2027',
+    title: "Masterclass 'Responsief coachen'",
+    location: 'Arnhem',
+    slug: 'responsief-coachen',
+  },
+];
+---
+
+<section id="agenda" class="section">
+  <div class="container">
+    <h2 class="agenda__heading">Agenda</h2>
+    <div class="agenda__grid">
+      {events.map((event) => (
+        <EventCard {...event} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .agenda__heading {
+    color: var(--color-primary);
+    margin-bottom: var(--space-md);
+  }
+
+  .agenda__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-md);
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+import PersonCard from './PersonCard.astro';
+
+const team = [
+  {
+    name: 'Tjip de Jong',
+    photo: 'tjip-de-jong.jpg',
+    bio: 'Tjip de Jong is onderzoeker, al jaren zelfstandig adviseur en auteur van verschillende managementboeken. Het meest bekend is hij van de veelbeluisterde onderwijspodcast Tjipcast.',
+  },
+  {
+    name: 'Sarah Bergsen',
+    photo: 'sarah-bergsen.jpg',
+    bio: 'Sarah Bergsen is interim-directeur in het primair onderwijs, onderwijskundige en auteur van verschillende vakpublicaties en bestuurssecretaris van researchED Nederland.',
+  },
+  {
+    name: 'Erik Meester',
+    photo: 'erik-meester.jpg',
+    bio: 'Erik Meester is leraar, schrijver en curriculumontwikkelaar, veelgevraagd spreker op diverse onderwijscongressen en columnist bij o.a. de Volkskrant.',
+  },
+];
+---
+
+<section id="over-ons" class="section">
+  <div class="container">
+    <h2 class="over-ons__heading">Over ons</h2>
+    <p class="over-ons__intro">
+      Vakinhoud, professionaliteit en menselijke relatie zijn voor ons heel belangrijk. Dat betekent
+      dat het tijdens onze bijeenkomsten echt altijd ergens over gaat, dat we steeds op zoek gaan
+      naar manieren om ons eigen handelen te verbeteren en dat we zorgdragen voor een persoonlijke
+      sfeer. We houden dus van theorie, maar hechten ook veel waarde aan de concrete vertaling van
+      de theorie naar de praktijk. Tot slot is discipline voor ons een essentieel concept.
+      Professionaliseren is een serieus proces, dat vraagt om serieuze toewijding en inzet, van
+      zowel ons als docenten als onze cursisten. No pain, no gain!
+    </p>
+    <p class="over-ons__sub">
+      De hoofddocenten zijn Tjip de Jong, Sarah Bergsen en Erik Meester. Wij werken graag samen met
+      een grote diversiteit aan deskundige gastdocenten.
+    </p>
+    <div class="over-ons__grid">
+      {team.map((person) => (
+        <PersonCard {...person} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .over-ons__heading {
+    color: var(--color-primary);
+    margin-bottom: var(--space-md);
+  }
+
+  .over-ons__intro {
+    max-width: 72ch;
+    margin-bottom: var(--space-sm);
+    line-height: 1.8;
+  }
+
+  .over-ons__sub {
+    max-width: 72ch;
+    margin-bottom: var(--space-lg);
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
+
+  .over-ons__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--space-md);
+  }
+</style>

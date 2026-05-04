@@ -1,0 +1,62 @@
+---
+const leergangen = [
+  {
+    title: 'Leidinggeven aan schooleigen curriculumontwikkeling',
+    body: `In deze leergang staat het proces van curriculumontwikkeling centraal: hoe pak je dat
+doordacht en op duurzame wijze aan? En waar moet je daarbij organisatorisch en veranderkundig
+allemaal rekening mee houden?`,
+  },
+  {
+    title: 'Bouwen aan de basis',
+    body: `In deze leergang staat de inhoud van het schooleigen curriculum centraal: hoe krijg je
+het overzicht over leerlijnen van basisvakken als lezen, schrijven, rekenen en gedrag? En wat zijn
+de meest actuele inzichten vanuit de vakdidactiek?`,
+  },
+];
+---
+
+<section id="leergangen" class="section section--warm">
+  <div class="container">
+    <h2 class="leergangen__heading">Leergangen</h2>
+    <div class="leergangen__grid">
+      {leergangen.map(({ title, body }) => (
+        <div class="leergang">
+          <h3 class="leergang__title">{title}</h3>
+          <p class="leergang__body">{body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .leergangen__heading {
+    color: var(--color-primary);
+    margin-bottom: var(--space-md);
+  }
+
+  .leergangen__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .leergang {
+    background: var(--color-white);
+    border-left: 4px solid var(--color-primary);
+    border-radius: 0 6px 6px 0;
+    padding: var(--space-md);
+  }
+
+  .leergang__title {
+    color: var(--color-primary);
+    margin-bottom: var(--space-sm);
+    font-size: 1.1rem;
+  }
+
+  .leergang__body {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+</style>

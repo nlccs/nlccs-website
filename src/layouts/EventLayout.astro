@@ -1,0 +1,163 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  date: string;
+  location: string;
+  cost?: string;
+  level?: string;
+  accreditation?: string;
+}
+
+const {
+  title,
+  date,
+  location,
+  cost = 'Nader te bepalen',
+  level = 'Schoolleiders en leraren',
+  accreditation = 'Nader te bepalen',
+} = Astro.props;
+---
+
+<BaseLayout title={`${title} — NLCCS`} description={`Masterclass ${title} op ${date} in ${location}.`}>
+  <article class="event-page">
+    <header class="event-page__header section--primary">
+      <div class="container">
+        <a href="/#agenda" class="event-page__back">← Terug naar de agenda</a>
+        <h1 class="event-page__title">{title}</h1>
+      </div>
+    </header>
+
+    <div class="event-page__body container">
+      <aside class="event-page__meta">
+        <dl class="meta-list">
+          <div class="meta-list__item">
+            <dt>Datum</dt>
+            <dd>{date}</dd>
+          </div>
+          <div class="meta-list__item">
+            <dt>Locatie</dt>
+            <dd>{location}</dd>
+          </div>
+          <div class="meta-list__item">
+            <dt>Kosten</dt>
+            <dd>{cost}</dd>
+          </div>
+          <div class="meta-list__item">
+            <dt>Niveau</dt>
+            <dd>{level}</dd>
+          </div>
+          <div class="meta-list__item">
+            <dt>Accreditatie</dt>
+            <dd>{accreditation}</dd>
+          </div>
+        </dl>
+        <a href="/#agenda" class="btn-primary">Aanmelden</a>
+      </aside>
+
+      <div class="event-page__content">
+        <slot />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .event-page__header {
+    padding-block: var(--space-lg);
+  }
+
+  .event-page__back {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    margin-bottom: var(--space-sm);
+    transition: color 0.2s;
+  }
+
+  .event-page__back:hover { color: var(--color-white); }
+
+  .event-page__title {
+    color: var(--color-white);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .event-page__body {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-lg);
+    padding-block: var(--space-lg);
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .event-page__body {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Meta sidebar */
+  .event-page__meta {
+    background: var(--color-bg-warm);
+    border-radius: 6px;
+    padding: var(--space-md);
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-sm));
+  }
+
+  .meta-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .meta-list__item dt {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .meta-list__item dd {
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: 0.1rem;
+  }
+
+  .btn-primary {
+    display: block;
+    text-align: center;
+    background: var(--color-primary);
+    color: var(--color-white);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--color-primary-dark); }
+
+  /* Content area */
+  .event-page__content {
+    max-width: 72ch;
+    line-height: 1.8;
+  }
+
+  .event-page__content :global(h2) {
+    color: var(--color-primary);
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-sm);
+  }
+
+  .event-page__content :global(p) {
+    margin-bottom: var(--space-sm);
+    color: var(--color-text);
+  }
+</style>
