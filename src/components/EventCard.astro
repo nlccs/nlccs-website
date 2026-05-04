@@ -1,4 +1,6 @@
 ---
+import { url } from '../utils/url';
+
 interface Props {
   date: string;       // e.g. "28 september 2026"
   title: string;
@@ -16,7 +18,7 @@ const { date, title, location, slug } = Astro.props;
     <span class="event-card__pin" aria-hidden="true">📍</span>
     {location}
   </p>
-  <a href={`/masterclass/${slug}/`} class="event-card__link" aria-label={`Meer info over ${title}`}>
+  <a href={url(`/masterclass/${slug}/`)} class="event-card__link" aria-label={`Meer info over ${title}`}>
     Meer informatie →
   </a>
 </article>

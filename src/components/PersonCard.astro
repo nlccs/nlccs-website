@@ -1,4 +1,6 @@
 ---
+import { url } from '../utils/url';
+
 interface Props {
   name: string;
   photo?: string;  // path relative to /public/team/ — optional, falls back to initials
@@ -33,7 +35,7 @@ const placeholderSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200
 </svg>`;
 
 const placeholderSrc = `data:image/svg+xml;utf8,${encodeURIComponent(placeholderSvg)}`;
-const src = photo ? `/team/${photo}` : placeholderSrc;
+const src = photo ? url(`/team/${photo}`) : placeholderSrc;
 ---
 
 <article class="person-card">

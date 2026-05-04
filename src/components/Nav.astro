@@ -1,16 +1,18 @@
 ---
+import { url } from '../utils/url';
+
 const navLinks = [
-  { label: 'Agenda',      href: '/#agenda' },
-  { label: 'Leergangen',  href: '/#leergangen' },
-  { label: 'Over ons',    href: '/#over-ons' },
+  { label: 'Agenda',      href: url('/#agenda') },
+  { label: 'Leergangen',  href: url('/#leergangen') },
+  { label: 'Over ons',    href: url('/#over-ons') },
 ];
 ---
 
 <header class="nav">
   <div class="container nav__inner">
-    <a href="/" class="nav__logo" aria-label="NLCCS — naar de homepage">
+    <a href={url('/')} class="nav__logo" aria-label="NLCCS — naar de homepage">
       <img
-        src="/logo.svg"
+        src={url('/logo.svg')}
         alt="Nederlands Centrum voor Curriculumstudies"
         width="220"
         height="75"

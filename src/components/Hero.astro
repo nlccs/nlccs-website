@@ -1,4 +1,5 @@
 ---
+import { url } from '../utils/url';
 ---
 
 <section class="hero section--primary">
@@ -13,8 +14,8 @@
         kansrijke interventies, die zich elders ook al in de onderwijspraktijk bewezen hebben.
       </p>
       <div class="hero__cta">
-        <a href="/#agenda" class="btn btn--light">Bekijk de agenda</a>
-        <a href="/#leergangen" class="btn btn--outline">Onze leergangen</a>
+        <a href={url('/#agenda')} class="btn btn--light">Bekijk de agenda</a>
+        <a href={url('/#leergangen')} class="btn btn--outline">Onze leergangen</a>
       </div>
     </div>
   </div>

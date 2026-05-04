@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import { url } from '../utils/url';
 
 interface Props {
   title: string;
@@ -24,7 +25,7 @@ const {
   <article class="event-page">
     <header class="event-page__header section--primary">
       <div class="container">
-        <a href="/#agenda" class="event-page__back">← Terug naar de agenda</a>
+        <a href={url('/#agenda')} class="event-page__back">← Terug naar de agenda</a>
         <h1 class="event-page__title">{title}</h1>
       </div>
     </header>
@@ -53,7 +54,7 @@ const {
             <dd>{accreditation}</dd>
           </div>
         </dl>
-        <a href="/#agenda" class="btn-primary">Aanmelden</a>
+        <a href={url('/#agenda')} class="btn-primary">Aanmelden</a>
       </aside>
 
       <div class="event-page__content">
