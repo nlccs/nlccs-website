@@ -15,39 +15,37 @@ const initials = name
   .map(w => w[0].toUpperCase())
   .join('');
 
-// Subtle varied backgrounds per person, all in brand palette
 const bgColors = ['#131d77', '#1e2d99', '#0d1560'];
 const hash = name.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
 const bg = bgColors[hash % bgColors.length];
-
-const placeholderSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-  <rect width="200" height="200" fill="${bg}"/>
-  <text
-    x="100" y="100"
-    font-family="Open Sans, sans-serif"
-    font-size="72"
-    font-weight="700"
-    fill="rgba(255,255,255,0.9)"
-    text-anchor="middle"
-    dominant-baseline="central"
-    letter-spacing="-2"
-  >${initials}</text>
-</svg>`;
-
-const placeholderSrc = `data:image/svg+xml;utf8,${encodeURIComponent(placeholderSvg)}`;
-const src = photo ? url(`/team/${photo}`) : placeholderSrc;
 ---
 
 <article class="person-card">
   <div class="person-card__photo-wrap">
-    <img
-      src={src}
-      alt={name}
-      width="200"
-      height="200"
-      loading="lazy"
-      class="person-card__photo"
-    />
+    {photo ? (
+      <img
+        src={url(`/team/${photo}`)}
+        alt={name}
+        width="400"
+        height="400"
+        loading="lazy"
+        class="person-card__photo"
+      />
+    ) : (
+      <svg class="person-card__placeholder" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="200" height="200" fill={bg} />
+        <text
+          x="100"
+          y="100"
+          font-family="Open Sans, sans-serif"
+          font-size="72"
+          font-weight="700"
+          fill="rgba(255,255,255,0.85)"
+          text-anchor="middle"
+          dominant-baseline="central"
+        >{initials}</text>
+      </svg>
+    )}
   </div>
   <div class="person-card__content">
     <h3 class="person-card__name">{name}</h3>
@@ -71,9 +69,14 @@ const src = photo ? url(`/team/${photo}`) : placeholderSrc;
     background: var(--color-primary);
   }
 
-  .person-card__photo {
+  .person-card__photo,
+  .person-card__placeholder {
     width: 100%;
     height: 100%;
+    display: block;
+  }
+
+  .person-card__photo {
     object-fit: cover;
   }
 
