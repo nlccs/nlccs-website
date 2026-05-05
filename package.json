@@ -6,8 +6,9 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "copy-cms": "cp node_modules/@sveltia/cms/dist/sveltia-cms.js public/admin/sveltia-cms.js",
+    "dev": "npm run copy-cms && astro dev",
+    "build": "npm run copy-cms && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },

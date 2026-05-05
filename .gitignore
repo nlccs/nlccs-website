@@ -1,5 +1,8 @@
 # build output
 dist/
+
+# generated at build time from node_modules
+public/admin/sveltia-cms.js
 # generated types
 .astro/
 
