@@ -1,32 +1,11 @@
 ---
+import { getCollection } from 'astro:content';
 import EventCard from './EventCard.astro';
 
-const events = [
-  {
-    date: '28 september 2026',
-    title: "Masterclass 'Nieuwe kerndoelen toepassen'",
-    location: 'Vught',
-    slug: 'nieuwe-kerndoelen-toepassen',
-  },
-  {
-    date: '24 november 2026',
-    title: "Masterclass 'GenAI en het onderwijs'",
-    location: 'Dordrecht',
-    slug: 'genai-en-het-onderwijs',
-  },
-  {
-    date: '3 maart 2027',
-    title: "Masterclass 'Onderwijsmatig toetsen'",
-    location: 'Culemborg',
-    slug: 'onderwijsmatig-toetsen',
-  },
-  {
-    date: '20 mei 2027',
-    title: "Masterclass 'Responsief coachen'",
-    location: 'Arnhem',
-    slug: 'responsief-coachen',
-  },
-];
+const entries = await getCollection('masterclasses');
+const events = entries
+  .map(e => e.data)
+  .sort((a, b) => a.slug.localeCompare(b.slug)); // stable order; sort by date if you prefer
 ---
 
 <section id="agenda" class="section">
@@ -34,7 +13,12 @@ const events = [
     <h2 class="agenda__heading">Agenda</h2>
     <div class="agenda__grid">
       {events.map((event) => (
-        <EventCard {...event} />
+        <EventCard
+          date={event.date}
+          title={`Masterclass '${event.title}'`}
+          location={event.location}
+          slug={event.slug}
+        />
       ))}
     </div>
   </div>

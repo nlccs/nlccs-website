@@ -1,0 +1,20 @@
+---
+// Sveltia CMS admin panel.
+// Editors navigate to /nlccs-website/admin/ and authenticate via GitHub OAuth.
+// The <script> tag is processed by Astro/Vite and bundles @sveltia/cms for the browser.
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NLCCS Admin</title>
+    <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
+  </head>
+  <body>
+    <script>
+      import '@sveltia/cms';
+    </script>
+  </body>
+</html>

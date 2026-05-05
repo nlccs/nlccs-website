@@ -1,0 +1,61 @@
+backend:
+  name: github
+  repo: deSagaz/nlccs-website
+  branch: main
+  # OAuth is handled by a Sveltia CMS Authenticator deployed on Cloudflare Workers.
+  # See setup instructions in README or ask your developer.
+  base_url: https://YOUR_AUTHENTICATOR.YOUR_SUBDOMAIN.workers.dev
+
+# Media (team photos) are committed to the repo under public/team/
+media_folder: public/team
+public_folder: /team
+
+collections:
+  - name: masterclasses
+    label: Masterclasses
+    label_singular: Masterclass
+    folder: src/content/masterclasses
+    extension: yaml
+    format: yaml
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Titel, name: title, widget: string }
+      - { label: Datum, name: date, widget: string, hint: "Bijv. 28 september 2026" }
+      - { label: Locatie, name: location, widget: string }
+      - { label: Slug (URL), name: slug, widget: string, hint: "Bijv. nieuwe-kerndoelen-toepassen" }
+      - { label: Kosten, name: cost, widget: string, required: false, default: "Nader te bepalen" }
+      - { label: Niveau, name: level, widget: string, required: false, default: "Schoolleiders en leraren" }
+      - { label: Accreditatie, name: accreditation, widget: string, required: false, default: "Nader te bepalen" }
+      - { label: Inhoud, name: body, widget: text, required: false }
+
+  - name: leergangen
+    label: Leergangen
+    label_singular: Leergang
+    folder: src/content/leergangen
+    extension: yaml
+    format: yaml
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Volgorde, name: order, widget: number }
+      - { label: Titel, name: title, widget: string }
+      - { label: Omschrijving, name: body, widget: text }
+
+  - name: team
+    label: Team
+    label_singular: Teamlid
+    folder: src/content/team
+    extension: yaml
+    format: yaml
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Volgorde, name: order, widget: number }
+      - { label: Naam, name: name, widget: string }
+      - label: Foto
+        name: photo
+        widget: image
+        required: false
+        hint: "Wordt opgeslagen in public/team/"
+      - { label: Biografie, name: bio, widget: text }

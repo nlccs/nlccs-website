@@ -1,18 +1,10 @@
 ---
-const leergangen = [
-  {
-    title: 'Leidinggeven aan schooleigen curriculumontwikkeling',
-    body: `In deze leergang staat het proces van curriculumontwikkeling centraal: hoe pak je dat
-doordacht en op duurzame wijze aan? En waar moet je daarbij organisatorisch en veranderkundig
-allemaal rekening mee houden?`,
-  },
-  {
-    title: 'Bouwen aan de basis',
-    body: `In deze leergang staat de inhoud van het schooleigen curriculum centraal: hoe krijg je
-het overzicht over leerlijnen van basisvakken als lezen, schrijven, rekenen en gedrag? En wat zijn
-de meest actuele inzichten vanuit de vakdidactiek?`,
-  },
-];
+import { getCollection } from 'astro:content';
+
+const entries = await getCollection('leergangen');
+const leergangen = entries
+  .map(e => e.data)
+  .sort((a, b) => a.order - b.order);
 ---
 
 <section id="leergangen" class="section section--warm">

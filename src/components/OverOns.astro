@@ -1,20 +1,11 @@
 ---
+import { getCollection } from 'astro:content';
 import PersonCard from './PersonCard.astro';
 
-const team = [
-  {
-    name: 'Tjip de Jong',
-    bio: 'Tjip de Jong is onderzoeker, al jaren zelfstandig adviseur en auteur van verschillende managementboeken. Het meest bekend is hij van de veelbeluisterde onderwijspodcast Tjipcast.',
-  },
-  {
-    name: 'Sarah Bergsen',
-    bio: 'Sarah Bergsen is interim-directeur in het primair onderwijs, onderwijskundige en auteur van verschillende vakpublicaties en bestuurssecretaris van researchED Nederland.',
-  },
-  {
-    name: 'Erik Meester',
-    bio: 'Erik Meester is leraar, schrijver en curriculumontwikkelaar, veelgevraagd spreker op diverse onderwijscongressen en columnist bij o.a. de Volkskrant.',
-  },
-];
+const entries = await getCollection('team');
+const team = entries
+  .map(e => e.data)
+  .sort((a, b) => a.order - b.order);
 ---
 
 <section id="over-ons" class="section">
@@ -35,7 +26,7 @@ const team = [
     </p>
     <div class="over-ons__grid">
       {team.map((person) => (
-        <PersonCard {...person} />
+        <PersonCard name={person.name} photo={person.photo} bio={person.bio} />
       ))}
     </div>
   </div>

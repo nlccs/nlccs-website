@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@fontsource/open-sans": "^5.2.7",
+    "@sveltia/cms": "^0.159.1",
     "astro": "^6.2.2"
   }
 }

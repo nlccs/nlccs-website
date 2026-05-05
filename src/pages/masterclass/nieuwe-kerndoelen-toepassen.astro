@@ -1,12 +1,12 @@
 ---
+import { getEntry } from 'astro:content';
 import EventLayout from '../../layouts/EventLayout.astro';
+
+const entry = await getEntry('masterclasses', 'nieuwe-kerndoelen-toepassen');
+const { title, date, location, cost, level, accreditation, body } = entry.data;
 ---
 
-<EventLayout
-  title="Nieuwe kerndoelen toepassen"
-  date="28 september 2026"
-  location="Vught"
->
+<EventLayout {title} {date} {location} {cost} {level} {accreditation}>
   <h2>Over deze masterclass</h2>
-  <p>Lorem Ipsum</p>
+  <p>{body}</p>
 </EventLayout>
