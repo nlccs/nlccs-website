@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: deSagaz/nlccs-website
+  repo: nlccs/nlccs-website
   branch: main
   # OAuth is handled by a Sveltia CMS Authenticator deployed on Cloudflare Workers.
   # See setup instructions in README or ask your developer.
