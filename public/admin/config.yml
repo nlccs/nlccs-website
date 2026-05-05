@@ -4,7 +4,7 @@ backend:
   branch: main
   # OAuth is handled by a Sveltia CMS Authenticator deployed on Cloudflare Workers.
   # See setup instructions in README or ask your developer.
-  base_url: https://YOUR_AUTHENTICATOR.YOUR_SUBDOMAIN.workers.dev
+  base_url: https://nlccs-auth.ivar-634.workers.dev
 
 # Media (team photos) are committed to the repo under public/team/
 media_folder: public/team
