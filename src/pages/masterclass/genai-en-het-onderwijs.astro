@@ -3,9 +3,9 @@ import { getEntry } from 'astro:content';
 import EventLayout from '../../layouts/EventLayout.astro';
 
 const entry = await getEntry('masterclasses', 'genai-en-het-onderwijs');
-const { title, date, time_start, time_end, location, cost, level, studielast, deelnemers, accreditation, aanmeld_url, sfeerfoto, intro, body } = entry.data;
+const { title, type, date, time_start, time_end, location, cost, level, studielast, deelnemers, accreditation, aanmeld_url, sfeerfoto, intro, body } = entry.data;
 ---
 
-<EventLayout {title} {date} timeStart={time_start} timeEnd={time_end} {location} {cost} {level} {studielast} {deelnemers} {accreditation} aanmeldUrl={aanmeld_url} {sfeerfoto} {intro}>
+<EventLayout {title} {type} {date} timeStart={time_start} timeEnd={time_end} {location} {cost} {level} {studielast} {deelnemers} {accreditation} aanmeldUrl={aanmeld_url} {sfeerfoto} {intro}>
   {body?.split("\n\n").map(para => <p>{para}</p>)}
 </EventLayout>

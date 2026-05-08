@@ -1,5 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
+import { url } from '../utils/url';
+import { format } from 'date-fns';
+import { nl } from 'date-fns/locale';
 
 const entries = await getCollection('leergangen');
 const leergangen = entries
@@ -11,10 +14,17 @@ const leergangen = entries
   <div class="container">
     <h2 class="leergangen__heading">Leergangen</h2>
     <div class="leergangen__grid">
-      {leergangen.map(({ title, body }) => (
+      {leergangen.map(({ title, slug, startdatum, location, intro, body }) => (
         <div class="leergang">
+          <div class="leergang__meta">
+            <time class="leergang__date" datetime={format(startdatum, 'yyyy-MM-dd')}>
+              Start: {format(startdatum, 'd MMMM yyyy', { locale: nl })}
+            </time>
+            {location && <span class="leergang__location">📍 {location}</span>}
+          </div>
           <h3 class="leergang__title">{title}</h3>
-          {body.split('\n\n').map(para => <p class="leergang__body">{para}</p>)}
+          {(intro ?? body).split('\n\n').map(para => <p class="leergang__body">{para}</p>)}
+          <a href={url(`/leergang/${slug}/`)} class="leergang__link">Meer informatie →</a>
         </div>
       ))}
     </div>
@@ -40,6 +50,26 @@ const leergangen = entries
     padding: var(--space-md);
   }
 
+  .leergang__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .leergang__date {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .leergang__location {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
   .leergang__title {
     color: var(--color-primary);
     margin-bottom: var(--space-sm);
@@ -53,7 +83,22 @@ const leergangen = entries
     margin-bottom: 0.85rem;
   }
 
-  .leergang__body:last-child {
+  .leergang__body:last-of-type {
     margin-bottom: 0;
+  }
+
+  .leergang__link {
+    display: inline-block;
+    margin-top: var(--space-sm);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .leergang__link:hover {
+    border-bottom-color: var(--color-primary);
   }
 </style>
