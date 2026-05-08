@@ -169,7 +169,7 @@ const timeLabel    = formatTimeRange(timeStart, timeEnd);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 0.35rem;
+    margin-bottom: var(--space-2xs);
   }
 
   .detail-page__title {
@@ -189,11 +189,20 @@ const timeLabel    = formatTimeRange(timeStart, timeEnd);
     .detail-page__body {
       grid-template-columns: 1fr;
     }
+
+    .detail-page__content {
+      order: 1;
+    }
+
+    .detail-page__meta {
+      order: 2;
+      position: static;
+    }
   }
 
   .detail-page__meta {
     background: var(--color-bg-warm);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     padding: var(--space-md);
     position: sticky;
     top: calc(var(--nav-height) + var(--space-sm));
@@ -204,7 +213,7 @@ const timeLabel    = formatTimeRange(timeStart, timeEnd);
     font-weight: 400;
     font-size: 0.9rem;
     color: var(--color-text-muted);
-    margin-top: 0.1rem;
+    margin-top: var(--space-2xs);
   }
 
   .detail-page__content {
@@ -235,7 +244,7 @@ const timeLabel    = formatTimeRange(timeStart, timeEnd);
   .detail-page__sfeer {
     margin-top: var(--space-md);
     margin-bottom: var(--space-md);
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     aspect-ratio: 16 / 9;
   }
