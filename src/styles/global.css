@@ -35,11 +35,20 @@
   --color-white:          #ffffff;
 
   /* Spacing scale */
+  --space-2xs:  0.25rem;
   --space-xs:   0.5rem;
   --space-sm:   1rem;
   --space-md:   2rem;
   --space-lg:   4rem;
   --space-xl:   6rem;
+
+  /* Border radius */
+  --radius-sm:  4px;
+  --radius-md:  6px;
+  --radius-lg:  8px;
+
+  /* Button padding */
+  --btn-padding: 0.75rem 1.5rem;
 
   /* Layout */
   --max-width:  1200px;
@@ -106,8 +115,8 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
   color: var(--color-white);
   font-weight: 700;
   font-size: 0.95rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  padding: var(--btn-padding);
+  border-radius: var(--radius-sm);
   text-decoration: none;
   transition: background 0.2s;
 }
@@ -132,5 +141,5 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 .meta-list__item dd {
   font-weight: 600;
   color: var(--color-text);
-  margin-top: 0.1rem;
+  margin-top: var(--space-2xs);
 }
