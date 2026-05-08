@@ -57,7 +57,6 @@ collections:
     create: true
     slug: "{{uuid}}"
     fields:
-      - { label: Volgorde, name: order, widget: number }
       - { label: Titel, name: title, widget: string }
       - { label: Slug (URL), name: slug, widget: string, hint: "Bepaalt de URL. Alleen kleine letters, cijfers en koppeltekens. Wijzigen hernoemt het bestand automatisch bij volgende deploy." }
       - { label: Startdatum, name: startdatum, widget: datetime, format: YYYY-MM-DD, date_format: DD-MM-YYYY, time_format: false }

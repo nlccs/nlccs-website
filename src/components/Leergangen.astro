@@ -1,14 +1,19 @@
 ---
 import { getCollection } from 'astro:content';
 import { url } from '../utils/url';
-import { format } from 'date-fns';
+import { compareAsc, format } from 'date-fns';
 import { nl } from 'date-fns/locale';
 import Paragraphs from './Paragraphs.astro';
 
 const entries = await getCollection('leergangen');
 const leergangen = entries
   .map(e => e.data)
-  .sort((a, b) => a.order - b.order);
+  .sort((a, b) => {
+    if (!a.startdatum && !b.startdatum) return 0;
+    if (!a.startdatum) return 1;
+    if (!b.startdatum) return -1;
+    return compareAsc(a.startdatum, b.startdatum);
+  });
 ---
 
 <section id="leergangen" class="section section--warm">

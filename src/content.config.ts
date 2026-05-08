@@ -29,7 +29,6 @@ const masterclasses = defineCollection({
 const leergangen = defineCollection({
   loader: glob({ pattern: '**/*.yaml', base: './src/content/leergangen' }),
   schema: z.object({
-    order: z.number(),
     title: z.string(),
     slug: z.string(),
     startdatum: z.coerce.date().optional(),
