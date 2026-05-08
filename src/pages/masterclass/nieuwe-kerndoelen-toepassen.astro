@@ -3,10 +3,10 @@ import { getEntry } from 'astro:content';
 import EventLayout from '../../layouts/EventLayout.astro';
 
 const entry = await getEntry('masterclasses', 'nieuwe-kerndoelen-toepassen');
-const { title, date, location, cost, level, accreditation, body } = entry.data;
+const { title, date, time_start, time_end, location, cost, level, accreditation, body } = entry.data;
 ---
 
-<EventLayout {title} {date} {location} {cost} {level} {accreditation}>
+<EventLayout {title} {date} timeStart={time_start} timeEnd={time_end} {location} {cost} {level} {accreditation}>
   <h2>Over deze masterclass</h2>
   <p>{body}</p>
 </EventLayout>

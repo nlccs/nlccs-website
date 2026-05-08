@@ -2,10 +2,12 @@
 import { getCollection } from 'astro:content';
 import EventCard from './EventCard.astro';
 
+import { compareAsc } from 'date-fns';
+
 const entries = await getCollection('masterclasses');
 const events = entries
   .map(e => e.data)
-  .sort((a, b) => a.slug.localeCompare(b.slug)); // stable order; sort by date if you prefer
+  .sort((a, b) => compareAsc(a.date, b.date));
 ---
 
 <section id="agenda" class="section">
@@ -15,6 +17,8 @@ const events = entries
       {events.map((event) => (
         <EventCard
           date={event.date}
+          timeStart={event.time_start}
+          timeEnd={event.time_end}
           title={`Masterclass '${event.title}'`}
           location={event.location}
           slug={event.slug}

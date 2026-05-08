@@ -21,7 +21,9 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: Titel, name: title, widget: string }
-      - { label: Datum, name: date, widget: string, hint: "Bijv. 28 september 2026" }
+      - { label: Datum, name: date, widget: datetime, format: YYYY-MM-DD, date_format: DD-MM-YYYY, time_format: false }
+      - { label: Starttijd, name: time_start, widget: datetime, format: HH:mm, date_format: false, time_format: HH:mm, default: "09:00" }
+      - { label: Eindtijd, name: time_end, widget: datetime, format: HH:mm, date_format: false, time_format: HH:mm, default: "17:00" }
       - { label: Locatie, name: location, widget: string }
       - { label: Slug (URL), name: slug, widget: string, hint: "Bijv. nieuwe-kerndoelen-toepassen" }
       - { label: Kosten, name: cost, widget: string, required: false, default: "Nader te bepalen" }

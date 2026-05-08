@@ -15,6 +15,7 @@
   "dependencies": {
     "@fontsource/open-sans": "^5.2.7",
     "@sveltia/cms": "^0.159.1",
-    "astro": "^6.2.2"
+    "astro": "^6.2.2",
+    "date-fns": "^4.1.0"
   }
 }

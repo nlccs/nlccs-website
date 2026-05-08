@@ -1,10 +1,14 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { url } from '../utils/url';
+import { format } from 'date-fns';
+import { nl } from 'date-fns/locale';
 
 interface Props {
   title: string;
-  date: string;
+  date: Date;
+  timeStart?: string;
+  timeEnd?: string;
   location: string;
   cost?: string;
   level?: string;
@@ -14,14 +18,19 @@ interface Props {
 const {
   title,
   date,
+  timeStart,
+  timeEnd,
   location,
   cost = 'Nader te bepalen',
   level = 'Schoolleiders en leraren',
   accreditation = 'Nader te bepalen',
 } = Astro.props;
+
+const dateLabel = format(date, 'd MMMM yyyy', { locale: nl });
+const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart ?? null;
 ---
 
-<BaseLayout title={`${title} — NLCCS`} description={`Masterclass ${title} op ${date} in ${location}.`}>
+<BaseLayout title={`${title} — NLCCS`} description={`Masterclass ${title} op ${dateLabel} in ${location}.`}>
   <article class="event-page">
     <header class="event-page__header section--primary">
       <div class="container">
@@ -35,7 +44,10 @@ const {
         <dl class="meta-list">
           <div class="meta-list__item">
             <dt>Datum</dt>
-            <dd>{date}</dd>
+            <dd>
+              <time datetime={format(date, 'yyyy-MM-dd')}>{dateLabel}</time>
+              {timeLabel && <span class="meta-time">{timeLabel}</span>}
+            </dd>
           </div>
           <div class="meta-list__item">
             <dt>Locatie</dt>
@@ -127,6 +139,14 @@ const {
   .meta-list__item dd {
     font-weight: 600;
     color: var(--color-text);
+    margin-top: 0.1rem;
+  }
+
+  .meta-time {
+    display: block;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
     margin-top: 0.1rem;
   }
 

@@ -1,18 +1,28 @@
 ---
 import { url } from '../utils/url';
+import { format } from 'date-fns';
+import { nl } from 'date-fns/locale';
 
 interface Props {
-  date: string;       // e.g. "28 september 2026"
+  date: Date;
+  timeStart?: string;  // e.g. "09:00"
+  timeEnd?: string;    // e.g. "17:00"
   title: string;
   location: string;
-  slug: string;       // URL slug for the detail page
+  slug: string;
 }
 
-const { date, title, location, slug } = Astro.props;
+const { date, timeStart, timeEnd, title, location, slug } = Astro.props;
+
+const dateIso = format(date, 'yyyy-MM-dd');
+const dateLabel = format(date, 'd MMMM yyyy', { locale: nl });
+const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart ?? null;
 ---
 
 <article class="event-card">
-  <time class="event-card__date" datetime={slug}>{date}</time>
+  <time class="event-card__date" datetime={dateIso}>
+    {dateLabel}{timeLabel && <span class="event-card__time"> · {timeLabel}</span>}
+  </time>
   <h3 class="event-card__title">{title}</h3>
   <p class="event-card__location">
     <span class="event-card__pin" aria-hidden="true">📍</span>
@@ -45,6 +55,11 @@ const { date, title, location, slug } = Astro.props;
     color: var(--color-accent);
     letter-spacing: 0.04em;
     text-transform: uppercase;
+  }
+
+  .event-card__time {
+    font-weight: 400;
+    letter-spacing: 0;
   }
 
   .event-card__title {

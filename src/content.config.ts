@@ -5,7 +5,9 @@ const masterclasses = defineCollection({
   loader: glob({ pattern: '**/*.yaml', base: './src/content/masterclasses' }),
   schema: z.object({
     title: z.string(),
-    date: z.string(),
+    date: z.coerce.date(),
+    time_start: z.string().optional(),
+    time_end: z.string().optional(),
     location: z.string(),
     slug: z.string(),
     cost: z.string().optional(),
