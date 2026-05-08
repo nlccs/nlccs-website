@@ -15,6 +15,8 @@ const masterclasses = defineCollection({
     studielast: z.string().optional(),
     deelnemers: z.string().optional(),
     accreditation: z.string().optional(),
+    sfeerfoto: z.string().optional(),
+    intro: z.string().optional(),
     body: z.string().optional(),
   }),
 });

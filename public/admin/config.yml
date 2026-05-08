@@ -31,6 +31,14 @@ collections:
       - { label: Studielast, name: studielast, widget: string, required: false }
       - { label: Deelnemers, name: deelnemers, widget: string, required: false }
       - { label: Accreditatie, name: accreditation, widget: string, required: false, default: "Nader te bepalen" }
+      - { label: Inleiding, name: intro, widget: text, required: false, hint: "Wordt groot weergegeven boven de sfeerfoto" }
+      - label: Sfeerfoto
+        name: sfeerfoto
+        widget: image
+        required: false
+        media_folder: /public/masterclasses
+        public_folder: /masterclasses
+        hint: "Wordt weergegeven onder de inhoudstekst"
       - { label: Inhoud, name: body, widget: text, required: false }
 
   - name: leergangen
