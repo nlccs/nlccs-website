@@ -5,6 +5,7 @@ const masterclasses = defineCollection({
   loader: glob({ pattern: '**/*.yaml', base: './src/content/masterclasses' }),
   schema: z.object({
     title: z.string(),
+    type: z.string().default('Masterclass'),
     date: z.coerce.date(),
     time_start: z.string().optional(),
     time_end: z.string().optional(),
@@ -27,6 +28,16 @@ const leergangen = defineCollection({
   schema: z.object({
     order: z.number(),
     title: z.string(),
+    slug: z.string(),
+    startdatum: z.coerce.date(),
+    location: z.string().optional(),
+    cost: z.string().optional(),
+    level: z.string().optional(),
+    studielast: z.string().optional(),
+    deelnemers: z.string().optional(),
+    aanmeld_url: z.string().url().nullish().transform(v => v ?? undefined),
+    intro: z.string().optional(),
+    sfeerfoto: z.string().optional(),
     body: z.string(),
   }),
 });
