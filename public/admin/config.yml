@@ -98,3 +98,4 @@ collections:
         required: false
         hint: "Wordt opgeslagen in public/team/"
       - { label: Biografie, name: bio, widget: text }
+      - { label: E-mailadres, name: email, widget: string, required: false, hint: "Wordt weergegeven als klikbare link op de website." }

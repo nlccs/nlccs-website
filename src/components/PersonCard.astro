@@ -3,11 +3,12 @@ import { url } from '../utils/url';
 
 interface Props {
   name: string;
-  photo?: string;  // path relative to /public/team/ — optional, falls back to initials
+  photo?: string;
   bio: string;
+  email?: string;
 }
 
-const { name, photo, bio } = Astro.props;
+const { name, photo, bio, email } = Astro.props;
 
 const initials = name
   .split(' ')
@@ -50,6 +51,15 @@ const bg = bgColors[hash % bgColors.length];
   <div class="person-card__content">
     <h3 class="person-card__name">{name}</h3>
     <p class="person-card__bio">{bio}</p>
+    {email && (
+      <a href={`mailto:${email}`} class="person-card__email">
+        <svg class="person-card__email-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path d="M3 4a1 1 0 0 0-1 1v.586l8 5.333 8-5.333V5a1 1 0 0 0-1-1H3Z"/>
+          <path d="M18 7.414l-7.447 4.964a1 1 0 0 1-1.106 0L2 7.414V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7.414Z"/>
+        </svg>
+        {email}
+      </a>
+    )}
   </div>
 </article>
 
@@ -95,5 +105,28 @@ const bg = bgColors[hash % bgColors.length];
     font-size: 0.9rem;
     line-height: 1.75;
     color: var(--color-text-muted);
+  }
+
+  .person-card__email {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: var(--space-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    opacity: 0.75;
+    transition: opacity 0.2s;
+  }
+
+  .person-card__email:hover {
+    opacity: 1;
+  }
+
+  .person-card__email-icon {
+    width: 0.95rem;
+    height: 0.95rem;
+    flex-shrink: 0;
   }
 </style>
