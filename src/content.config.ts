@@ -12,6 +12,8 @@ const masterclasses = defineCollection({
     slug: z.string(),
     cost: z.string().optional(),
     level: z.string().optional(),
+    studielast: z.string().optional(),
+    deelnemers: z.string().optional(),
     accreditation: z.string().optional(),
     body: z.string().optional(),
   }),

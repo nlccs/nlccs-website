@@ -28,6 +28,8 @@ collections:
       - { label: Slug (URL), name: slug, widget: string, hint: "Bijv. nieuwe-kerndoelen-toepassen" }
       - { label: Kosten, name: cost, widget: string, required: false, default: "Nader te bepalen" }
       - { label: Niveau, name: level, widget: string, required: false, default: "Schoolleiders en leraren" }
+      - { label: Studielast, name: studielast, widget: string, required: false }
+      - { label: Deelnemers, name: deelnemers, widget: string, required: false }
       - { label: Accreditatie, name: accreditation, widget: string, required: false, default: "Nader te bepalen" }
       - { label: Inhoud, name: body, widget: text, required: false }
 

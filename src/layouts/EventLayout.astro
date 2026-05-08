@@ -12,6 +12,8 @@ interface Props {
   location: string;
   cost?: string;
   level?: string;
+  studielast?: string;
+  deelnemers?: string;
   accreditation?: string;
 }
 
@@ -23,6 +25,8 @@ const {
   location,
   cost = 'Nader te bepalen',
   level = 'Schoolleiders en leraren',
+  studielast,
+  deelnemers,
   accreditation = 'Nader te bepalen',
 } = Astro.props;
 
@@ -61,6 +65,18 @@ const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart
             <dt>Niveau</dt>
             <dd>{level}</dd>
           </div>
+          {studielast && (
+            <div class="meta-list__item">
+              <dt>Studielast</dt>
+              <dd>{studielast}</dd>
+            </div>
+          )}
+          {deelnemers && (
+            <div class="meta-list__item">
+              <dt>Deelnemers</dt>
+              <dd>{deelnemers}</dd>
+            </div>
+          )}
           <div class="meta-list__item">
             <dt>Accreditatie</dt>
             <dd>{accreditation}</dd>
