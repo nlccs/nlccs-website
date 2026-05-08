@@ -1,6 +1,9 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+// Reusable: accepts a URL string, null, or undefined — always outputs string | undefined
+const optionalUrl = z.string().url().nullish().transform(v => v ?? undefined);
+
 const masterclasses = defineCollection({
   loader: glob({ pattern: '**/*.yaml', base: './src/content/masterclasses' }),
   schema: z.object({
@@ -16,7 +19,7 @@ const masterclasses = defineCollection({
     studielast: z.string().optional(),
     deelnemers: z.string().optional(),
     accreditation: z.string().optional(),
-    aanmeld_url: z.string().url().optional(),
+    aanmeld_url: optionalUrl,
     sfeerfoto: z.string().optional(),
     intro: z.string().optional(),
     body: z.string().optional(),
@@ -35,7 +38,7 @@ const leergangen = defineCollection({
     level: z.string().optional(),
     studielast: z.string().optional(),
     deelnemers: z.string().optional(),
-    aanmeld_url: z.string().url().nullish().transform(v => v ?? undefined),
+    aanmeld_url: optionalUrl,
     intro: z.string().optional(),
     sfeerfoto: z.string().optional(),
     body: z.string(),

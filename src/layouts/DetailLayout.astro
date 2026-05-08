@@ -1,79 +1,108 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { url } from '../utils/url';
+import { formatTimeRange } from '../utils/time';
 import { format } from 'date-fns';
 import { nl } from 'date-fns/locale';
 
 interface Props {
+  // Page identity
   title: string;
-  type?: string;
-  date: Date;
+  eyebrow: string;
+  description: string;
+  // Navigation
+  backHref: string;
+  backLabel: string;
+  contentHeading: string;
+  // Date — pass `date` for events, `startdatum` for leergangen
+  date?: Date;
   timeStart?: string;
   timeEnd?: string;
-  location: string;
+  startdatum?: Date;
+  // Meta sidebar
+  location?: string;
   cost?: string;
   level?: string;
   studielast?: string;
   deelnemers?: string;
   accreditation?: string;
   aanmeldUrl?: string;
+  // Content
   sfeerfoto?: string;
   intro?: string;
 }
 
 const {
   title,
-  type = 'Masterclass',
+  eyebrow,
+  description,
+  backHref,
+  backLabel,
+  contentHeading,
   date,
   timeStart,
   timeEnd,
+  startdatum,
   location,
   cost = 'Nader te bepalen',
-  level = 'Schoolleiders en leraren',
+  level,
   studielast,
   deelnemers,
-  accreditation = 'Nader te bepalen',
+  accreditation,
   aanmeldUrl,
   sfeerfoto,
   intro,
 } = Astro.props;
 
-const dateLabel = format(date, 'd MMMM yyyy', { locale: nl });
-const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart ?? null;
+const dateLabel    = date       ? format(date,       'd MMMM yyyy', { locale: nl }) : null;
+const startLabel   = startdatum ? format(startdatum, 'd MMMM yyyy', { locale: nl }) : null;
+const timeLabel    = formatTimeRange(timeStart, timeEnd);
 ---
 
-<BaseLayout title={`${title} — NLCCS`} description={`Masterclass ${title} op ${dateLabel} in ${location}.`}>
-  <article class="event-page">
-    <header class="event-page__header section--primary">
+<BaseLayout title={`${title} — NLCCS`} {description}>
+  <article class="detail-page">
+    <header class="detail-page__header section--primary">
       <div class="container">
-        <a href={url('/#agenda')} class="event-page__back">← Terug naar de agenda</a>
-        <p class="event-page__eyebrow">{type}</p>
-        <h1 class="event-page__title">{title}</h1>
+        <a href={url(backHref)} class="detail-page__back">← {backLabel}</a>
+        <p class="detail-page__eyebrow">{eyebrow}</p>
+        <h1 class="detail-page__title">{title}</h1>
       </div>
     </header>
 
-    <div class="event-page__body container">
-      <aside class="event-page__meta">
+    <div class="detail-page__body container">
+      <aside class="detail-page__meta">
         <dl class="meta-list">
-          <div class="meta-list__item">
-            <dt>Datum</dt>
-            <dd>
-              <time datetime={format(date, 'yyyy-MM-dd')}>{dateLabel}</time>
-              {timeLabel && <span class="meta-time">{timeLabel}</span>}
-            </dd>
-          </div>
-          <div class="meta-list__item">
-            <dt>Locatie</dt>
-            <dd>{location}</dd>
-          </div>
+          {date && dateLabel && (
+            <div class="meta-list__item">
+              <dt>Datum</dt>
+              <dd>
+                <time datetime={format(date, 'yyyy-MM-dd')}>{dateLabel}</time>
+                {timeLabel && <span class="detail-meta__time">{timeLabel}</span>}
+              </dd>
+            </div>
+          )}
+          {startdatum && startLabel && (
+            <div class="meta-list__item">
+              <dt>Startdatum</dt>
+              <dd><time datetime={format(startdatum, 'yyyy-MM-dd')}>{startLabel}</time></dd>
+            </div>
+          )}
+          {location && (
+            <div class="meta-list__item">
+              <dt>Locatie</dt>
+              <dd>{location}</dd>
+            </div>
+          )}
           <div class="meta-list__item">
             <dt>Kosten</dt>
             <dd>{cost}</dd>
           </div>
-          <div class="meta-list__item">
-            <dt>Niveau</dt>
-            <dd>{level}</dd>
-          </div>
+          {level && (
+            <div class="meta-list__item">
+              <dt>Niveau</dt>
+              <dd>{level}</dd>
+            </div>
+          )}
           {studielast && (
             <div class="meta-list__item">
               <dt>Studielast</dt>
@@ -86,26 +115,28 @@ const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart
               <dd>{deelnemers}</dd>
             </div>
           )}
-          <div class="meta-list__item">
-            <dt>Accreditatie</dt>
-            <dd>{accreditation}</dd>
-          </div>
+          {accreditation && (
+            <div class="meta-list__item">
+              <dt>Accreditatie</dt>
+              <dd>{accreditation}</dd>
+            </div>
+          )}
         </dl>
         {aanmeldUrl && (
           <a href={aanmeldUrl} class="btn-primary" target="_blank" rel="noopener noreferrer">Aanmelden</a>
         )}
       </aside>
 
-      <div class="event-page__content">
-        <h2>Over deze masterclass</h2>
-        {intro && <p class="event-page__intro">{intro}</p>}
+      <div class="detail-page__content">
+        <h2>{contentHeading}</h2>
+        {intro && <p class="detail-page__intro">{intro}</p>}
         {sfeerfoto && (
-          <figure class="event-page__sfeer">
+          <figure class="detail-page__sfeer">
             <img
               src={url(sfeerfoto)}
               alt={`Sfeerimpressie ${title}`}
               loading="lazy"
-              class="event-page__sfeer-img"
+              class="detail-page__sfeer-img"
             />
           </figure>
         )}
@@ -116,11 +147,11 @@ const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart
 </BaseLayout>
 
 <style>
-  .event-page__header {
+  .detail-page__header {
     padding-block: var(--space-lg);
   }
 
-  .event-page__back {
+  .detail-page__back {
     display: inline-block;
     font-size: 0.9rem;
     font-weight: 600;
@@ -130,9 +161,9 @@ const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart
     transition: color 0.2s;
   }
 
-  .event-page__back:hover { color: var(--color-white); }
+  .detail-page__back:hover { color: var(--color-white); }
 
-  .event-page__eyebrow {
+  .detail-page__eyebrow {
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -141,12 +172,12 @@ const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart
     margin-bottom: 0.35rem;
   }
 
-  .event-page__title {
+  .detail-page__title {
     color: var(--color-white);
     font-size: clamp(1.5rem, 4vw, 2.5rem);
   }
 
-  .event-page__body {
+  .detail-page__body {
     display: grid;
     grid-template-columns: 280px 1fr;
     gap: var(--space-lg);
@@ -155,13 +186,12 @@ const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart
   }
 
   @media (max-width: 768px) {
-    .event-page__body {
+    .detail-page__body {
       grid-template-columns: 1fr;
     }
   }
 
-  /* Meta sidebar */
-  .event-page__meta {
+  .detail-page__meta {
     background: var(--color-bg-warm);
     border-radius: 6px;
     padding: var(--space-md);
@@ -169,28 +199,7 @@ const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart
     top: calc(var(--nav-height) + var(--space-sm));
   }
 
-  .meta-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-md);
-  }
-
-  .meta-list__item dt {
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-  }
-
-  .meta-list__item dd {
-    font-weight: 600;
-    color: var(--color-text);
-    margin-top: 0.1rem;
-  }
-
-  .meta-time {
+  .detail-meta__time {
     display: block;
     font-weight: 400;
     font-size: 0.9rem;
@@ -198,28 +207,12 @@ const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart
     margin-top: 0.1rem;
   }
 
-  .btn-primary {
-    display: block;
-    text-align: center;
-    background: var(--color-primary);
-    color: var(--color-white);
-    font-weight: 700;
-    font-size: 0.95rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: background 0.2s;
-  }
-
-  .btn-primary:hover { background: var(--color-primary-dark); }
-
-  /* Content area */
-  .event-page__content {
+  .detail-page__content {
     max-width: 72ch;
     line-height: 1.8;
   }
 
-  .event-page__intro {
+  .detail-page__intro {
     font-size: 1.2rem;
     line-height: 1.8;
     color: var(--color-text-muted);
@@ -228,18 +221,18 @@ const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart
     margin-bottom: var(--space-md);
   }
 
-  .event-page__content :global(h2) {
+  .detail-page__content :global(h2) {
     color: var(--color-primary);
     margin-top: var(--space-md);
     margin-bottom: var(--space-sm);
   }
 
-  .event-page__content :global(p) {
+  .detail-page__content :global(p) {
     margin-bottom: var(--space-sm);
     color: var(--color-text);
   }
 
-  .event-page__sfeer {
+  .detail-page__sfeer {
     margin-top: var(--space-md);
     margin-bottom: var(--space-md);
     border-radius: 8px;
@@ -247,7 +240,7 @@ const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart
     aspect-ratio: 16 / 9;
   }
 
-  .event-page__sfeer-img {
+  .detail-page__sfeer-img {
     width: 100%;
     height: 100%;
     object-fit: cover;

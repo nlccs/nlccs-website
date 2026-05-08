@@ -80,3 +80,41 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
   background: var(--color-primary);
   color: var(--color-white);
 }
+
+/* ── Shared components ───────────────────────────────────────── */
+
+.btn-primary {
+  display: block;
+  text-align: center;
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover { background: var(--color-primary-dark); }
+
+.meta-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.meta-list__item dt {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.meta-list__item dd {
+  font-weight: 600;
+  color: var(--color-text);
+  margin-top: 0.1rem;
+}

@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import LeergangenLayout from '../../layouts/LeergangenLayout.astro';
+import DetailLayout from '../../layouts/DetailLayout.astro';
+import Paragraphs from '../../components/Paragraphs.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('leergangen');
@@ -19,6 +20,22 @@ const { entry } = Astro.props;
 const { title, startdatum, location, cost, level, studielast, deelnemers, aanmeld_url, intro, sfeerfoto, body } = entry.data;
 ---
 
-<LeergangenLayout {title} {startdatum} {location} {cost} {level} {studielast} {deelnemers} aanmeldUrl={aanmeld_url} {intro} {sfeerfoto}>
-  {body.split('\n\n').map(para => <p>{para}</p>)}
-</LeergangenLayout>
+<DetailLayout
+  {title}
+  eyebrow="Leergang"
+  description={`Leergang ${title}.`}
+  backHref="/#leergangen"
+  backLabel="Terug naar leergangen"
+  contentHeading="Over deze leergang"
+  {startdatum}
+  {location}
+  {cost}
+  {level}
+  {studielast}
+  {deelnemers}
+  aanmeldUrl={aanmeld_url}
+  {sfeerfoto}
+  {intro}
+>
+  <Paragraphs text={body} />
+</DetailLayout>

@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import { url } from '../utils/url';
 import { format } from 'date-fns';
 import { nl } from 'date-fns/locale';
+import Paragraphs from './Paragraphs.astro';
 
 const entries = await getCollection('leergangen');
 const leergangen = entries
@@ -25,7 +26,7 @@ const leergangen = entries
             {location && <span class="leergang__location">📍 {location}</span>}
           </div>
           <h3 class="leergang__title">{title}</h3>
-          {(intro ?? body).split('\n\n').map(para => <p class="leergang__body">{para}</p>)}
+          <Paragraphs text={intro ?? body} class="leergang__body" />
           <a href={url(`/leergang/${slug}/`)} class="leergang__link">Meer informatie →</a>
         </div>
       ))}

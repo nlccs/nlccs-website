@@ -1,5 +1,6 @@
 ---
 import { url } from '../utils/url';
+import { formatTimeRange } from '../utils/time';
 import { format } from 'date-fns';
 import { nl } from 'date-fns/locale';
 
@@ -16,7 +17,7 @@ const { date, timeStart, timeEnd, title, location, slug } = Astro.props;
 
 const dateIso = format(date, 'yyyy-MM-dd');
 const dateLabel = format(date, 'd MMMM yyyy', { locale: nl });
-const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart ?? null;
+const timeLabel = formatTimeRange(timeStart, timeEnd);
 ---
 
 <article class="event-card">

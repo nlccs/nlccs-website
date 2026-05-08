@@ -1,7 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import EventLayout from '../../layouts/EventLayout.astro';
+import DetailLayout from '../../layouts/DetailLayout.astro';
+import Paragraphs from '../../components/Paragraphs.astro';
+import { url } from '../../utils/url';
 
 export async function getStaticPaths() {
   const entries = await getCollection('masterclasses');
@@ -19,6 +21,25 @@ const { entry } = Astro.props;
 const { title, type, date, time_start, time_end, location, cost, level, studielast, deelnemers, accreditation, aanmeld_url, sfeerfoto, intro, body } = entry.data;
 ---
 
-<EventLayout {title} {type} {date} timeStart={time_start} timeEnd={time_end} {location} {cost} {level} {studielast} {deelnemers} {accreditation} aanmeldUrl={aanmeld_url} {sfeerfoto} {intro}>
-  {body?.split("\n\n").map(para => <p>{para}</p>)}
-</EventLayout>
+<DetailLayout
+  {title}
+  eyebrow={type}
+  description={`${type} ${title} op ${location}.`}
+  backHref="/#agenda"
+  backLabel="Terug naar de agenda"
+  contentHeading="Over deze masterclass"
+  {date}
+  timeStart={time_start}
+  timeEnd={time_end}
+  {location}
+  {cost}
+  {level}
+  {studielast}
+  {deelnemers}
+  {accreditation}
+  aanmeldUrl={aanmeld_url}
+  {sfeerfoto}
+  {intro}
+>
+  {body && <Paragraphs text={body} />}
+</DetailLayout>
