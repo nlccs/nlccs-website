@@ -6,7 +6,7 @@ import LeergangenLayout from '../../layouts/LeergangenLayout.astro';
 export async function getStaticPaths() {
   const entries = await getCollection('leergangen');
   return entries.map(entry => ({
-    params: { slug: entry.id },
+    params: { slug: entry.data.slug },
     props: { entry },
   }));
 }

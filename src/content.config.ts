@@ -10,7 +10,7 @@ const masterclasses = defineCollection({
     time_start: z.union([z.string(), z.number().transform(n => `${String(Math.floor(n / 60)).padStart(2, '0')}:${String(n % 60).padStart(2, '0')}`)]).optional(),
     time_end: z.union([z.string(), z.number().transform(n => `${String(Math.floor(n / 60)).padStart(2, '0')}:${String(n % 60).padStart(2, '0')}`)]).optional(),
     location: z.string(),
-    slug: z.string().optional(),
+    slug: z.string(),
     cost: z.string().optional(),
     level: z.string().optional(),
     studielast: z.string().optional(),
@@ -28,7 +28,7 @@ const leergangen = defineCollection({
   schema: z.object({
     order: z.number(),
     title: z.string(),
-    slug: z.string().optional(),
+    slug: z.string(),
     startdatum: z.coerce.date().optional(),
     location: z.string().optional(),
     cost: z.string().optional(),

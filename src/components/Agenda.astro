@@ -6,7 +6,7 @@ import { compareAsc } from 'date-fns';
 
 const entries = await getCollection('masterclasses');
 const events = entries
-  .map(e => ({ ...e.data, slug: e.id }))
+  .map(e => e.data)
   .sort((a, b) => compareAsc(a.date, b.date));
 ---
 

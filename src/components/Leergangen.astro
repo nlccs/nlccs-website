@@ -6,7 +6,7 @@ import { nl } from 'date-fns/locale';
 
 const entries = await getCollection('leergangen');
 const leergangen = entries
-  .map(e => ({ ...e.data, slug: e.data.slug ?? e.id }))
+  .map(e => e.data)
   .sort((a, b) => a.order - b.order);
 ---
 

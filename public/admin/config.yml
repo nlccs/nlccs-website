@@ -18,9 +18,10 @@ collections:
     extension: yaml
     format: yaml
     create: true
-    slug: "{{slug}}"
+    slug: "{{uuid}}"
     fields:
       - { label: Titel, name: title, widget: string }
+      - { label: Slug (URL), name: slug, widget: string, hint: "Bepaalt de URL. Alleen kleine letters, cijfers en koppeltekens. Wijzigen hernoemt het bestand automatisch bij volgende deploy." }
       - { label: Type, name: type, widget: string, default: "Masterclass", hint: "Bijv. Masterclass, Verdiepingssessie, Workshop" }
       - { label: Datum, name: date, widget: datetime, format: YYYY-MM-DD, date_format: DD-MM-YYYY, time_format: false }
       - { label: Starttijd, name: time_start, widget: datetime, format: HH:mm, date_format: false, time_format: HH:mm, default: "09:00" }
@@ -54,10 +55,11 @@ collections:
     extension: yaml
     format: yaml
     create: true
-    slug: "{{slug}}"
+    slug: "{{uuid}}"
     fields:
       - { label: Volgorde, name: order, widget: number }
       - { label: Titel, name: title, widget: string }
+      - { label: Slug (URL), name: slug, widget: string, hint: "Bepaalt de URL. Alleen kleine letters, cijfers en koppeltekens. Wijzigen hernoemt het bestand automatisch bij volgende deploy." }
       - { label: Startdatum, name: startdatum, widget: datetime, format: YYYY-MM-DD, date_format: DD-MM-YYYY, time_format: false }
       - { label: Locatie, name: location, widget: string, required: false }
       - { label: Kosten, name: cost, widget: string, required: false, default: "Nader te bepalen" }
