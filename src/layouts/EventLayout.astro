@@ -15,6 +15,7 @@ interface Props {
   studielast?: string;
   deelnemers?: string;
   accreditation?: string;
+  aanmeldUrl?: string;
   sfeerfoto?: string;
   intro?: string;
 }
@@ -30,6 +31,7 @@ const {
   studielast,
   deelnemers,
   accreditation = 'Nader te bepalen',
+  aanmeldUrl,
   sfeerfoto,
   intro,
 } = Astro.props;
@@ -86,7 +88,9 @@ const timeLabel = timeStart && timeEnd ? `${timeStart}–${timeEnd}` : timeStart
             <dd>{accreditation}</dd>
           </div>
         </dl>
-        <a href={url('/#agenda')} class="btn-primary">Aanmelden</a>
+        {aanmeldUrl && (
+          <a href={aanmeldUrl} class="btn-primary" target="_blank" rel="noopener noreferrer">Aanmelden</a>
+        )}
       </aside>
 
       <div class="event-page__content">

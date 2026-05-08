@@ -31,6 +31,12 @@ collections:
       - { label: Studielast, name: studielast, widget: string, required: false }
       - { label: Deelnemers, name: deelnemers, widget: string, required: false }
       - { label: Accreditatie, name: accreditation, widget: string, required: false, default: "Nader te bepalen" }
+      - label: Aanmeldlink
+        name: aanmeld_url
+        widget: string
+        required: false
+        hint: "Volledige URL inclusief https://, bijv. https://eventbrite.com/..."
+        pattern: ['^https?://.+', "Moet een geldige URL zijn die begint met http:// of https://"]
       - { label: Inleiding, name: intro, widget: text, required: false, hint: "Wordt groot weergegeven boven de sfeerfoto" }
       - label: Sfeerfoto
         name: sfeerfoto
