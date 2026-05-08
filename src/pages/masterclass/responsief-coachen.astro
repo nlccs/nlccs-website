@@ -8,5 +8,5 @@ const { title, date, time_start, time_end, location, cost, level, studielast, de
 
 <EventLayout {title} {date} timeStart={time_start} timeEnd={time_end} {location} {cost} {level} {studielast} {deelnemers} {accreditation}>
   <h2>Over deze masterclass</h2>
-  <p>{body}</p>
+  {body?.split("\n\n").map(para => <p>{para}</p>)}
 </EventLayout>

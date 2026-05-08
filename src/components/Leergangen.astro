@@ -14,7 +14,7 @@ const leergangen = entries
       {leergangen.map(({ title, body }) => (
         <div class="leergang">
           <h3 class="leergang__title">{title}</h3>
-          <p class="leergang__body">{body}</p>
+          {body.split('\n\n').map(para => <p class="leergang__body">{para}</p>)}
         </div>
       ))}
     </div>
@@ -50,5 +50,10 @@ const leergangen = entries
     color: var(--color-text-muted);
     font-size: 0.95rem;
     line-height: 1.75;
+    margin-bottom: 0.85rem;
+  }
+
+  .leergang__body:last-child {
+    margin-bottom: 0;
   }
 </style>
