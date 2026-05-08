@@ -5,12 +5,6 @@ backend:
   # OAuth is handled by a Sveltia CMS Authenticator deployed on Cloudflare Workers.
   # See setup instructions in README or ask your developer.
   base_url: https://nlccs-auth.ivar-634.workers.dev
-  commit_messages:
-    create: 'Create {{collection}} "{{fields.title}}"'
-    update: 'Update {{collection}} "{{fields.title}}"'
-    delete: 'Delete {{collection}} "{{fields.title}}"'
-    uploadMedia: 'Upload "{{path}}"'
-    deleteMedia: 'Delete "{{path}}"'
 
 # Media (team photos) are committed to the repo under public/team/
 media_folder: public/team
