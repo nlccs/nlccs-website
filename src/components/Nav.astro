@@ -1,11 +1,11 @@
 ---
 import { url } from '../utils/url';
+import { getCollection } from 'astro:content';
 
-const navLinks = [
-  { label: 'Agenda',      href: url('/#agenda') },
-  { label: 'Leergangen',  href: url('/#leergangen') },
-  { label: 'Over ons',    href: url('/#over-ons') },
-];
+const leergangEntries = await getCollection('leergangen');
+const leergangen = leergangEntries
+  .map(e => e.data)
+  .sort((a, b) => a.order - b.order);
 ---
 
 <header class="nav">
@@ -21,9 +21,20 @@ const navLinks = [
     </a>
     <nav aria-label="Hoofdnavigatie">
       <ul class="nav__links">
-        {navLinks.map(({ label, href }) => (
-          <li><a href={href} class="nav__link">{label}</a></li>
-        ))}
+        <li class="nav__item"><a href={url('/#agenda')} class="nav__link">Agenda</a></li>
+        <li class="nav__item nav__item--has-dropdown">
+          <a href={url('/#leergangen')} class="nav__link">Leergangen</a>
+          <ul class="nav__dropdown">
+            <div class="nav__dropdown-box">
+              {leergangen.map(({ title, slug }) => (
+                <li>
+                  <a href={url(`/leergang/${slug}/`)} class="nav__dropdown-link">{title}</a>
+                </li>
+              ))}
+            </div>
+          </ul>
+        </li>
+        <li class="nav__item"><a href={url('/#over-ons')} class="nav__link">Over ons</a></li>
       </ul>
     </nav>
   </div>
@@ -53,8 +64,16 @@ const navLinks = [
 
   .nav__links {
     display: flex;
+    align-items: stretch;
     gap: var(--space-md);
     list-style: none;
+    height: 100%;
+  }
+
+  .nav__item {
+    position: relative;
+    display: flex;
+    align-items: center;
   }
 
   .nav__link {
@@ -70,6 +89,54 @@ const navLinks = [
 
   .nav__link:hover {
     border-bottom-color: var(--color-primary);
+  }
+
+  /* Dropdown */
+  .nav__dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    /* padding-top fills the gap between li bottom and nav bottom edge,
+       keeping hover alive the entire way down */
+    padding-top: 0.75rem;
+    list-style: none;
+    min-width: 280px;
+    z-index: 200;
+  }
+
+  .nav__dropdown-box {
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+  }
+
+  .nav__dropdown-link {
+    display: block;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-primary);
+    text-decoration: none;
+    white-space: normal;
+    background: var(--color-white);
+    border-left: 3px solid transparent;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .nav__dropdown-link:hover {
+    background: var(--color-bg-warm-dark);
+    border-left-color: var(--color-primary);
+  }
+
+  /* Show on li:hover so the full area (link + dropdown) keeps hover alive */
+  .nav__item--has-dropdown:hover > .nav__link {
+    border-bottom-color: var(--color-primary);
+  }
+
+  .nav__item--has-dropdown:hover .nav__dropdown {
+    display: block;
   }
 
   @media (max-width: 600px) {
