@@ -6,7 +6,7 @@ import { nl } from 'date-fns/locale';
 
 const entries = await getCollection('leergangen');
 const leergangen = entries
-  .map(e => e.data)
+  .map(e => ({ ...e.data, slug: e.data.slug ?? e.id }))
   .sort((a, b) => a.order - b.order);
 ---
 
@@ -17,9 +17,11 @@ const leergangen = entries
       {leergangen.map(({ title, slug, startdatum, location, intro, body }) => (
         <div class="leergang">
           <div class="leergang__meta">
-            <time class="leergang__date" datetime={format(startdatum, 'yyyy-MM-dd')}>
-              Start: {format(startdatum, 'd MMMM yyyy', { locale: nl })}
-            </time>
+            {startdatum && (
+              <time class="leergang__date" datetime={format(startdatum, 'yyyy-MM-dd')}>
+                Start: {format(startdatum, 'd MMMM yyyy', { locale: nl })}
+              </time>
+            )}
             {location && <span class="leergang__location">📍 {location}</span>}
           </div>
           <h3 class="leergang__title">{title}</h3>

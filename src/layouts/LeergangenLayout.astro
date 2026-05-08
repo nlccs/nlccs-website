@@ -6,7 +6,7 @@ import { nl } from 'date-fns/locale';
 
 interface Props {
   title: string;
-  startdatum: Date;
+  startdatum?: Date;
   location?: string;
   cost?: string;
   level?: string;
@@ -30,7 +30,7 @@ const {
   sfeerfoto,
 } = Astro.props;
 
-const datumLabel = format(startdatum, 'd MMMM yyyy', { locale: nl });
+const datumLabel = startdatum ? format(startdatum, 'd MMMM yyyy', { locale: nl }) : null;
 ---
 
 <BaseLayout title={`${title} — NLCCS`} description={`Leergang ${title}, start ${datumLabel}.`}>
@@ -46,10 +46,12 @@ const datumLabel = format(startdatum, 'd MMMM yyyy', { locale: nl });
     <div class="leergang-page__body container">
       <aside class="leergang-page__meta">
         <dl class="meta-list">
-          <div class="meta-list__item">
-            <dt>Startdatum</dt>
-            <dd><time datetime={format(startdatum, 'yyyy-MM-dd')}>{datumLabel}</time></dd>
-          </div>
+          {startdatum && datumLabel && (
+            <div class="meta-list__item">
+              <dt>Startdatum</dt>
+              <dd><time datetime={format(startdatum, 'yyyy-MM-dd')}>{datumLabel}</time></dd>
+            </div>
+          )}
           {location && (
             <div class="meta-list__item">
               <dt>Locatie</dt>

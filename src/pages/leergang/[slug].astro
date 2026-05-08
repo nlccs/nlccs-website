@@ -1,8 +1,21 @@
 ---
-import { getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 import LeergangenLayout from '../../layouts/LeergangenLayout.astro';
 
-const entry = await getEntry('leergangen', 'bouwen-aan-de-basis');
+export async function getStaticPaths() {
+  const entries = await getCollection('leergangen');
+  return entries.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'leergangen'>;
+}
+
+const { entry } = Astro.props;
 const { title, startdatum, location, cost, level, studielast, deelnemers, aanmeld_url, intro, sfeerfoto, body } = entry.data;
 ---
 

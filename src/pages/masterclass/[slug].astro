@@ -1,8 +1,21 @@
 ---
-import { getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 import EventLayout from '../../layouts/EventLayout.astro';
 
-const entry = await getEntry('masterclasses', 'responsief-coachen');
+export async function getStaticPaths() {
+  const entries = await getCollection('masterclasses');
+  return entries.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'masterclasses'>;
+}
+
+const { entry } = Astro.props;
 const { title, type, date, time_start, time_end, location, cost, level, studielast, deelnemers, accreditation, aanmeld_url, sfeerfoto, intro, body } = entry.data;
 ---
 

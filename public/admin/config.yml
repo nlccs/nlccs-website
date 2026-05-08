@@ -26,7 +26,6 @@ collections:
       - { label: Starttijd, name: time_start, widget: datetime, format: HH:mm, date_format: false, time_format: HH:mm, default: "09:00" }
       - { label: Eindtijd, name: time_end, widget: datetime, format: HH:mm, date_format: false, time_format: HH:mm, default: "17:00" }
       - { label: Locatie, name: location, widget: string }
-      - { label: Slug (URL), name: slug, widget: string, hint: "Bijv. nieuwe-kerndoelen-toepassen" }
       - { label: Kosten, name: cost, widget: string, required: false, default: "Nader te bepalen" }
       - { label: Niveau, name: level, widget: string, required: false, default: "Schoolleiders en leraren" }
       - { label: Studielast, name: studielast, widget: string, required: false }
@@ -59,7 +58,6 @@ collections:
     fields:
       - { label: Volgorde, name: order, widget: number }
       - { label: Titel, name: title, widget: string }
-      - { label: Slug (URL), name: slug, widget: string, hint: "Bijv. curriculumontwikkeling" }
       - { label: Startdatum, name: startdatum, widget: datetime, format: YYYY-MM-DD, date_format: DD-MM-YYYY, time_format: false }
       - { label: Locatie, name: location, widget: string, required: false }
       - { label: Kosten, name: cost, widget: string, required: false, default: "Nader te bepalen" }
