@@ -2,13 +2,15 @@
   "name": "nlccs-website",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": "pnpm@11.0.4",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.12.0",
+    "pnpm": ">=11"
   },
   "scripts": {
     "copy-cms": "cp node_modules/@sveltia/cms/dist/sveltia-cms.js public/admin/sveltia-cms.js",
-    "dev": "npm run copy-cms && astro dev",
-    "build": "npm run copy-cms && astro build",
+    "dev": "pnpm run copy-cms && astro dev",
+    "build": "pnpm run copy-cms && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
