@@ -80,6 +80,12 @@ a { color: inherit; }
   color: var(--color-white);
 }
 
+.section--primary ::selection,
+.footer ::selection {
+  background: var(--color-highlight);
+  color: var(--color-primary);
+}
+
 h1, h2, h3, h4 {
   font-family: 'Open Sans', sans-serif;
   font-weight: 700;
