@@ -54,12 +54,81 @@ const {
   intro,
 } = Astro.props;
 
-const dateLabel    = date       ? format(date,       'd MMMM yyyy', { locale: nl }) : null;
-const startLabel   = startdatum ? format(startdatum, 'd MMMM yyyy', { locale: nl }) : null;
-const timeLabel    = formatTimeRange(timeStart, timeEnd);
+const dateLabel  = date       ? format(date,       'd MMMM yyyy', { locale: nl }) : null;
+const startLabel = startdatum ? format(startdatum, 'd MMMM yyyy', { locale: nl }) : null;
+const timeLabel  = formatTimeRange(timeStart, timeEnd);
+
+// ── Social / SEO ─────────────────────────────────────────────────
+const siteBase   = (Astro.site ?? new URL('https://www.nlccs.nl')).href.replace(/\/$/, '');
+const pageUrl    = `${siteBase}${Astro.url.pathname}`;
+
+// Title: include event type for social cards
+const ogTitle = `${eyebrow}: ${title} — NLCCS`;
+
+// Description: prefer intro copy over the mechanical fallback
+const ogDescription = intro
+  ? intro.slice(0, 160).trimEnd()
+  : description;
+
+// Image: prefer sfeerfoto over the site default logo
+const ogImage    = sfeerfoto ?? undefined;
+const ogImageAlt = sfeerfoto
+  ? `Sfeerimpressie van ${title}`
+  : undefined;
+
+// ── Structured data ───────────────────────────────────────────────
+const isEvent = !!date; // masterclasses have `date`; leergangen have `startdatum`
+
+const structuredData = isEvent
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: title,
+      description: ogDescription,
+      startDate: date!.toISOString(),
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      ...(location ? { location: { '@type': 'Place', name: location } } : {}),
+      ...(sfeerfoto ? { image: `${siteBase}${sfeerfoto}` } : {}),
+      organizer: { '@type': 'Organization', name: 'NLCCS', url: siteBase },
+      url: pageUrl,
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'Course',
+      name: title,
+      description: ogDescription,
+      provider: { '@type': 'Organization', name: 'NLCCS', url: siteBase },
+      ...(startdatum ? { courseSchedule: { '@type': 'Schedule', startDate: startdatum.toISOString().split('T')[0] } } : {}),
+      ...(location ? { locationCreated: { '@type': 'Place', name: location } } : {}),
+      url: pageUrl,
+    };
+
+const breadcrumbData = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home',
+      item: `${siteBase}/` },
+    { '@type': 'ListItem', position: 2, name: isEvent ? 'Masterclasses' : 'Leergangen',
+      item: `${siteBase}/${isEvent ? '#agenda' : '#leergangen'}` },
+    { '@type': 'ListItem', position: 3, name: title,
+      item: pageUrl },
+  ],
+};
 ---
 
-<BaseLayout {title} {description}>
+<BaseLayout
+  {title}
+  description={ogDescription}
+  {ogTitle}
+  {ogImage}
+  {ogImageAlt}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbData)} />
+  </Fragment>
   <article class="detail-page">
     <header class="detail-page__header section--primary">
       <div class="container">

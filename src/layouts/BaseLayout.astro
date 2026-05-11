@@ -7,21 +7,28 @@ import { url } from '../utils/url';
 interface Props {
   title?: string;
   description?: string;
+  ogTitle?: string;       // Social title — defaults to pageTitle when omitted
   ogImage?: string;
+  ogImageAlt?: string;
 }
 
 const {
   title = 'Nederlands Centrum voor Curriculumstudies',
   description = 'NLCCS is een opleidings- en kennisinstituut voor schoolleiders en leraren.',
+  ogTitle,
   ogImage = '/og-default.png',
+  ogImageAlt = 'Logo van het Nederlands Centrum voor Curriculumstudies',
 } = Astro.props;
 
-const siteUrl = Astro.site ?? new URL('https://www.nlccs.nl');
+const siteUrl     = Astro.site ?? new URL('https://www.nlccs.nl');
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
-const ogImageUrl = new URL(ogImage, siteUrl).href;
-const pageTitle = title === 'Nederlands Centrum voor Curriculumstudies'
+const ogImageUrl  = new URL(ogImage, siteUrl).href;
+const isDefaultOg = ogImage === '/og-default.png';
+
+const pageTitle   = title === 'Nederlands Centrum voor Curriculumstudies'
   ? title
   : `${title} — NLCCS`;
+const socialTitle = ogTitle ?? pageTitle;
 ---
 
 <!doctype html>
@@ -34,14 +41,24 @@ const pageTitle = title === 'Nederlands Centrum voor Curriculumstudies'
     <!-- Canonical -->
     <link rel="canonical" href={canonicalUrl} />
 
-    <!-- Open Graph -->
+    <!-- Open Graph (Facebook, LinkedIn, WhatsApp, Slack, Discord, …) -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:title" content={pageTitle} />
+    <meta property="og:title" content={socialTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    {isDefaultOg && <meta property="og:image:width"  content="1500" />}
+    {isDefaultOg && <meta property="og:image:height" content="1500" />}
     <meta property="og:locale" content="nl_NL" />
     <meta property="og:site_name" content="NLCCS" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={socialTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     <!-- Icons -->
     <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
@@ -52,6 +69,9 @@ const pageTitle = title === 'Nederlands Centrum voor Curriculumstudies'
     <!-- Fonts -->
     <link rel="preload" as="font" type="font/woff2" href={url('/fonts/open-sans-variable.woff2')} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={url('/fonts/open-sans-variable-italic.woff2')} crossorigin />
+
+    <!-- Page-specific head content (structured data, etc.) -->
+    <slot name="head" />
 
     <title>{pageTitle}</title>
   </head>
