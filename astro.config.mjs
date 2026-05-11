@@ -5,6 +5,6 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
-  site: 'https://beta.nlccs.nl',
+  site: 'https://www.nlccs.nl',
   integrations: [sitemap()],
 });

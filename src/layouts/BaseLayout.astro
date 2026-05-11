@@ -13,10 +13,10 @@ interface Props {
 const {
   title = 'Nederlands Centrum voor Curriculumstudies',
   description = 'NLCCS is een opleidings- en kennisinstituut voor schoolleiders en leraren.',
-  ogImage = '/masterclasses/52488260249_1f704b3114_o.jpg',
+  ogImage = '/og-default.png',
 } = Astro.props;
 
-const siteUrl = Astro.site ?? new URL('https://beta.nlccs.nl');
+const siteUrl = Astro.site ?? new URL('https://www.nlccs.nl');
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 const ogImageUrl = new URL(ogImage, siteUrl).href;
 const pageTitle = title === 'Nederlands Centrum voor Curriculumstudies'
