@@ -28,11 +28,13 @@ const leergangen = entries
                 Start: {format(startdatum, 'd MMMM yyyy', { locale: nl })}
               </time>
             )}
-            {location && <span class="leergang__location">📍 {location}</span>}
+            {location && <span class="leergang__location"><span aria-hidden="true">📍</span> {location}</span>}
           </div>
           <h3 class="leergang__title">{title}</h3>
           <Paragraphs text={intro ?? body} class="leergang__body" />
-          <a href={url(`/leergang/${slug}/`)} class="leergang__link">Meer informatie →</a>
+          <a href={url(`/leergang/${slug}/`)} class="leergang__link" aria-label={`Meer informatie over ${title}`}>
+            Meer informatie <span aria-hidden="true">→</span>
+          </a>
         </div>
       ))}
     </div>
@@ -47,8 +49,14 @@ const leergangen = entries
 
   .leergangen__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-md);
+  }
+
+  @media (max-width: 640px) {
+    .leergangen__grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .leergang {
