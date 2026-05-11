@@ -7,12 +7,21 @@ import { url } from '../utils/url';
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
 }
 
 const {
   title = 'Nederlands Centrum voor Curriculumstudies',
   description = 'NLCCS is een opleidings- en kennisinstituut voor schoolleiders en leraren.',
+  ogImage = '/masterclasses/52488260249_1f704b3114_o.jpg',
 } = Astro.props;
+
+const siteUrl = Astro.site ?? new URL('https://beta.nlccs.nl');
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImageUrl = new URL(ogImage, siteUrl).href;
+const pageTitle = title === 'Nederlands Centrum voor Curriculumstudies'
+  ? title
+  : `${title} — NLCCS`;
 ---
 
 <!doctype html>
@@ -21,10 +30,30 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href={url('/logo.svg')} />
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content="nl_NL" />
+    <meta property="og:site_name" content="NLCCS" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
+    <link rel="icon" type="image/x-icon" href={url('/favicon.ico')} />
+    <link rel="apple-touch-icon" href={url('/logo.svg')} />
+    <meta name="theme-color" content="#013a63" />
+
+    <!-- Fonts -->
     <link rel="preload" as="font" type="font/woff2" href={url('/fonts/open-sans-variable.woff2')} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={url('/fonts/open-sans-variable-italic.woff2')} crossorigin />
-    <title>{title}</title>
+
+    <title>{pageTitle}</title>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Ga naar inhoud</a>

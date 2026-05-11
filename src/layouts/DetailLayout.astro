@@ -59,7 +59,7 @@ const startLabel   = startdatum ? format(startdatum, 'd MMMM yyyy', { locale: nl
 const timeLabel    = formatTimeRange(timeStart, timeEnd);
 ---
 
-<BaseLayout title={`${title} — NLCCS`} {description}>
+<BaseLayout {title} {description}>
   <article class="detail-page">
     <header class="detail-page__header section--primary">
       <div class="container">
