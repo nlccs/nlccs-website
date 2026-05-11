@@ -17,7 +17,7 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, startdatum, location, cost, level, studielast, deelnemers, aanmeld_url, intro, sfeerfoto, body } = entry.data;
+const { title, startdatum, location, cost, level, studielast, deelnemers, accreditation, aanmeld_url, intro, sfeerfoto, body } = entry.data;
 const bodyHtml = body ? await marked(body) : '';
 ---
 
@@ -34,6 +34,7 @@ const bodyHtml = body ? await marked(body) : '';
   {level}
   {studielast}
   {deelnemers}
+  {accreditation}
   aanmeldUrl={aanmeld_url}
   {sfeerfoto}
   {intro}

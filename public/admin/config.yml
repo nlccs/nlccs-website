@@ -31,7 +31,7 @@ collections:
       - { label: Niveau, name: level, widget: string, required: false, default: "Schoolleiders en leraren" }
       - { label: Studielast, name: studielast, widget: string, required: false }
       - { label: Deelnemers, name: deelnemers, widget: string, required: false }
-      - { label: Accreditatie, name: accreditation, widget: string, required: false, default: "Nader te bepalen" }
+      - { label: Accreditatie, name: accreditation, widget: string, required: false, default: "Lopend bij Ascenda" }
       - label: Aanmeldlink
         name: aanmeld_url
         widget: string
@@ -70,6 +70,7 @@ collections:
       - { label: Niveau, name: level, widget: string, required: false, default: "Schoolleiders" }
       - { label: Studielast, name: studielast, widget: string, required: false }
       - { label: Deelnemers, name: deelnemers, widget: string, required: false }
+      - { label: Accreditatie, name: accreditation, widget: string, required: false, default: "Lopend bij Ascenda" }
       - label: Aanmeldlink
         name: aanmeld_url
         widget: string

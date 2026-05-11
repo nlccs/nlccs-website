@@ -37,6 +37,7 @@ const leergangen = defineCollection({
     level: z.string().optional(),
     studielast: z.string().optional(),
     deelnemers: z.string().optional(),
+    accreditation: z.string().optional(),
     aanmeld_url: optionalUrl,
     intro: z.string().optional(),
     sfeerfoto: z.string().optional(),
