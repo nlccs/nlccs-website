@@ -16,7 +16,7 @@ const leergangen = entries
   });
 ---
 
-<section id="leergangen" class="section section--warm">
+<section id="leergangen" class="section section--tinted">
   <div class="container">
     <h2 class="leergangen__heading">Leergangen</h2>
     <div class="leergangen__grid">
@@ -108,5 +108,11 @@ const leergangen = entries
 
   .leergang__link:hover {
     border-bottom-color: var(--color-primary);
+  }
+
+  .leergang__link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
   }
 </style>

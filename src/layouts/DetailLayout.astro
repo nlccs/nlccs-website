@@ -123,7 +123,10 @@ const timeLabel    = formatTimeRange(timeStart, timeEnd);
           )}
         </dl>
         {aanmeldUrl && (
-          <a href={aanmeldUrl} class="btn-primary" target="_blank" rel="noopener noreferrer">Aanmelden</a>
+          <a href={aanmeldUrl} class="btn-primary" target="_blank" rel="noopener noreferrer">
+            Aanmelden
+            <span class="sr-only">(opent in nieuw tabblad)</span>
+          </a>
         )}
       </aside>
 
@@ -162,6 +165,12 @@ const timeLabel    = formatTimeRange(timeStart, timeEnd);
   }
 
   .detail-page__back:hover { color: var(--color-white); }
+
+  .detail-page__back:focus-visible {
+    outline: 2px solid var(--color-highlight);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
 
   .detail-page__eyebrow {
     font-size: 0.8rem;

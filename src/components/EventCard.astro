@@ -85,7 +85,7 @@ const timeLabel = formatTimeRange(timeStart, timeEnd);
   .event-card__link {
     display: inline-block;
     margin-top: auto;
-    padding-top: var(--space-sm);
+    padding-block: var(--space-2xs);
     font-weight: 600;
     font-size: 0.9rem;
     color: var(--color-primary);
@@ -97,5 +97,11 @@ const timeLabel = formatTimeRange(timeStart, timeEnd);
 
   .event-card__link:hover {
     border-bottom-color: var(--color-primary);
+  }
+
+  .event-card__link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
   }
 </style>

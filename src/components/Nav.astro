@@ -183,12 +183,14 @@ const leergangen = leergangEntries
     outline-offset: -2px;
   }
 
-  /* Show on hover */
-  .nav__item--has-dropdown:hover > .nav__link {
+  /* Show on hover or keyboard focus within */
+  .nav__item--has-dropdown:hover > .nav__link,
+  .nav__item--has-dropdown:focus-within > .nav__link {
     border-bottom-color: var(--color-primary);
   }
 
-  .nav__item--has-dropdown:hover .nav__dropdown {
+  .nav__item--has-dropdown:hover .nav__dropdown,
+  .nav__item--has-dropdown:focus-within .nav__dropdown {
     display: block;
   }
 

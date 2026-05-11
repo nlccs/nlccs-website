@@ -49,7 +49,7 @@ const team = defineCollection({
   schema: z.object({
     order: z.number(),
     name: z.string(),
-    photo: z.string().optional(),
+    photo: z.string(),
     bio: z.string(),
     email: z.string().email().optional(),
   }),
