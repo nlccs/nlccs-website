@@ -79,28 +79,55 @@ const ogImageAlt = sfeerfoto
 // ── Structured data ───────────────────────────────────────────────
 const isEvent = !!date; // masterclasses have `date`; leergangen have `startdatum`
 
+// Parse cost string like "€ 495,-" or "€ 3.750,-" → "495" / "3750"
+const priceRaw  = cost?.match(/[\d.,]+/)?.[0];
+const priceNum  = priceRaw
+  ? priceRaw.replace(/\./g, '').replace(/,.*$/, '')
+  : undefined;
+
+const nlccs = { '@type': 'Organization', name: 'NLCCS', url: siteBase };
+
+// Shared offer (used by both Event and Course)
+const offer = {
+  '@type': 'Offer',
+  ...(priceNum ? { price: priceNum, priceCurrency: 'EUR' } : {}),
+  url: aanmeldUrl ?? pageUrl,
+  availability: aanmeldUrl
+    ? 'https://schema.org/InStock'
+    : 'https://schema.org/LimitedAvailability',
+};
+
 const structuredData = isEvent
-  ? {
-      '@context': 'https://schema.org',
-      '@type': 'Event',
-      name: title,
-      description: ogDescription,
-      startDate: date!.toISOString(),
-      eventStatus: 'https://schema.org/EventScheduled',
-      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-      ...(location ? { location: { '@type': 'Place', name: location } } : {}),
-      ...(sfeerfoto ? { image: `${siteBase}${sfeerfoto}` } : {}),
-      organizer: { '@type': 'Organization', name: 'NLCCS', url: siteBase },
-      url: pageUrl,
-    }
+  ? (() => {
+      const dateStr   = date!.toISOString().split('T')[0];
+      const startDate = timeStart ? `${dateStr}T${timeStart}` : dateStr;
+      const endDate   = timeEnd   ? `${dateStr}T${timeEnd}`   : undefined;
+      return {
+        '@context': 'https://schema.org',
+        '@type': 'Event',
+        name: title,
+        description: ogDescription,
+        startDate,
+        ...(endDate ? { endDate } : {}),
+        eventStatus: 'https://schema.org/EventScheduled',
+        eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+        ...(location ? { location: { '@type': 'Place', name: location } } : {}),
+        ...(sfeerfoto ? { image: `${siteBase}${sfeerfoto}` } : {}),
+        organizer: nlccs,
+        performer: nlccs,
+        offers: offer,
+        url: pageUrl,
+      };
+    })()
   : {
       '@context': 'https://schema.org',
       '@type': 'Course',
       name: title,
       description: ogDescription,
-      provider: { '@type': 'Organization', name: 'NLCCS', url: siteBase },
+      provider: nlccs,
       ...(startdatum ? { courseSchedule: { '@type': 'Schedule', startDate: startdatum.toISOString().split('T')[0] } } : {}),
       ...(location ? { locationCreated: { '@type': 'Place', name: location } } : {}),
+      offers: offer,
       url: pageUrl,
     };
 
