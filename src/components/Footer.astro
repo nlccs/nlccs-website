@@ -3,7 +3,16 @@
 
 <footer class="footer">
   <div class="container footer__inner">
-    <p class="footer__name">Nederlands Centrum voor Curriculumstudies</p>
+    <div class="footer__left">
+      <p class="footer__name">Nederlands Centrum voor Curriculumstudies</p>
+      <a href="mailto:info@nlccs.nl" class="footer__mail">
+        <svg class="footer__mail-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path d="M3 4a1 1 0 0 0-1 1v.586l8 5.333 8-5.333V5a1 1 0 0 0-1-1H3Z"/>
+          <path d="M18 7.414l-7.447 4.964a1 1 0 0 1-1.106 0L2 7.414V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7.414Z"/>
+        </svg>
+        info@nlccs.nl
+      </a>
+    </div>
     <p class="footer__copy">&copy; {new Date().getFullYear()} NLCCS</p>
   </div>
 </footer>
@@ -28,8 +37,36 @@
     font-size: 0.9rem;
   }
 
+  .footer__left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .footer__mail {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-white);
+    text-decoration: none;
+    opacity: 0.75;
+    transition: opacity 0.2s;
+  }
+
+  .footer__mail:hover {
+    opacity: 1;
+  }
+
+  .footer__mail-icon {
+    width: 0.95rem;
+    height: 0.95rem;
+    flex-shrink: 0;
+  }
+
   .footer__copy {
     font-size: 0.85rem;
-    opacity: 0.7;
+    color: rgba(255, 255, 255, 0.5);
   }
 </style>
