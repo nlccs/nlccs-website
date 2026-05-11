@@ -52,6 +52,7 @@ const socialTitle = ogTitle ?? pageTitle;
     {isDefaultOg && <meta property="og:image:height" content="1500" />}
     <meta property="og:locale" content="nl_NL" />
     <meta property="og:site_name" content="NLCCS" />
+    <meta property="og:logo" content={new URL('/og-default.png', siteUrl).href} />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
