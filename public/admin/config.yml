@@ -46,7 +46,12 @@ collections:
         media_folder: /public/masterclasses
         public_folder: /masterclasses
         hint: "Wordt weergegeven onder de inhoudstekst"
-      - { label: Inhoud, name: body, widget: richtext, required: false }
+      - label: Inhoud
+        name: body
+        widget: richtext
+        required: false
+        buttons: [bold, italic, strikethrough, code, link, heading-three, heading-four, heading-five, heading-six, bulleted-list, numbered-list, quote]
+        editor_components: [image, code-block]
 
   - name: leergangen
     label: Leergangen
@@ -78,7 +83,12 @@ collections:
         required: false
         media_folder: /public/masterclasses
         public_folder: /masterclasses
-      - { label: Omschrijving, name: body, widget: richtext, required: false }
+      - label: Omschrijving
+        name: body
+        widget: richtext
+        required: false
+        buttons: [bold, italic, strikethrough, code, link, heading-three, heading-four, heading-five, heading-six, bulleted-list, numbered-list, quote]
+        editor_components: [image, code-block]
 
   - name: team
     label: Team

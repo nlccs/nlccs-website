@@ -253,7 +253,7 @@ const timeLabel    = formatTimeRange(timeStart, timeEnd);
   .detail-page__content :global(a) {
     color: var(--color-primary);
     text-decoration: underline;
-    text-decoration-color: var(--color-primary-light);
+    text-decoration-color: var(--color-text-muted);
     text-underline-offset: 3px;
     transition: color 0.15s, text-decoration-color 0.15s;
   }
@@ -309,7 +309,7 @@ const timeLabel    = formatTimeRange(timeStart, timeEnd);
   }
 
   .detail-page__content :global(blockquote) {
-    border-left: 3px solid var(--color-primary-light);
+    border-left: 3px solid var(--color-primary);
     margin: var(--space-sm) 0;
     padding: var(--space-xs) var(--space-sm);
     color: var(--color-text-muted);
@@ -323,7 +323,7 @@ const timeLabel    = formatTimeRange(timeStart, timeEnd);
   .detail-page__content :global(code) {
     font-family: ui-monospace, 'Cascadia Code', monospace;
     font-size: 0.875em;
-    background: var(--color-bg-warm);
+    background: var(--color-bg-tinted);
     color: var(--color-accent);
     padding: 0.15em 0.4em;
     border-radius: var(--radius-sm);
@@ -331,7 +331,7 @@ const timeLabel    = formatTimeRange(timeStart, timeEnd);
 
   .detail-page__content :global(pre) {
     background: var(--color-text);
-    color: var(--color-bg-warm);
+    color: var(--color-bg-tinted);
     padding: var(--space-sm);
     border-radius: var(--radius-md);
     overflow-x: auto;
@@ -350,7 +350,7 @@ const timeLabel    = formatTimeRange(timeStart, timeEnd);
 
   .detail-page__content :global(hr) {
     border: none;
-    border-top: 1px solid var(--color-bg-warm-dark);
+    border-top: 1px solid var(--color-bg-tinted-dark);
     margin: var(--space-md) 0;
   }
 
