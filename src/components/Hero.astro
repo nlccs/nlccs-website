@@ -60,30 +60,23 @@ import { url } from '../utils/url';
     font-size: 0.95rem;
     text-decoration: none;
     letter-spacing: 0.02em;
-    transition: opacity 0.2s;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
   }
-
-  .btn:hover { opacity: 0.85; }
 
   .btn--light {
     background: var(--color-highlight);
     color: var(--color-primary);
   }
 
-  .btn--light:hover {
-    background: var(--color-primary-dark);
-    color: var(--color-highlight);
-  }
-
   .btn--outline {
     background: transparent;
     color: var(--color-highlight);
     border: 2px solid var(--color-highlight);
-    opacity: 0.85;
   }
 
+  .btn--light:hover,
   .btn--outline:hover {
-    opacity: 1;
-    background: rgba(248, 217, 120, 0.12);
+    background: var(--color-primary-dark);
+    color: var(--color-highlight);
   }
 </style>
