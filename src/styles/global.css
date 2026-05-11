@@ -23,13 +23,13 @@
 
 /* Color palette — change here to retheme the entire site */
 :root {
-  --color-primary:        #131d77;
-  --color-primary-dark:   #0d1560;
-  --color-primary-light:  #1e2d99;
-  --color-accent:         #8b1a1a;
+  --color-primary:        #013a63;
+  --color-primary-dark:   #012f50;
+  --color-accent:         #773344;
+  --color-highlight:      #f8d978;
   --color-bg:             #ffffff;
-  --color-bg-warm:        #f7f0e4;
-  --color-bg-warm-dark:   #e8dbc8;
+  --color-bg-tinted:        #d3e5eb;
+  --color-bg-tinted-dark:   #ccc;
   --color-text:           #1a1a2e;
   --color-text-muted:     #4a4a6a;
   --color-white:          #ffffff;
@@ -103,7 +103,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 }
 
 .section--warm {
-  background: var(--color-bg-warm);
+  background: var(--color-bg-tinted);
 }
 
 .section--primary {
@@ -116,17 +116,20 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 .btn-primary {
   display: block;
   text-align: center;
-  background: var(--color-primary);
-  color: var(--color-white);
+  background: var(--color-highlight);
+  color: var(--color-primary);
   font-weight: 700;
   font-size: 0.95rem;
   padding: var(--btn-padding);
   border-radius: var(--radius-sm);
   text-decoration: none;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 
-.btn-primary:hover { background: var(--color-primary-dark); }
+.btn-primary:hover {
+  background: var(--color-primary);
+  color: var(--color-highlight);
+}
 
 .meta-list {
   display: flex;

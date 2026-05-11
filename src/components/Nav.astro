@@ -1,23 +1,35 @@
 ---
 import { url } from '../utils/url';
 import { getCollection } from 'astro:content';
+import { compareAsc } from 'date-fns';
 
 const leergangEntries = await getCollection('leergangen');
 const leergangen = leergangEntries
   .map(e => e.data)
-  .sort((a, b) => a.order - b.order);
+  .sort((a, b) => {
+    if (!a.startdatum && !b.startdatum) return 0;
+    if (!a.startdatum) return 1;
+    if (!b.startdatum) return -1;
+    return compareAsc(a.startdatum, b.startdatum);
+  });
 ---
 
 <header class="nav">
   <div class="container nav__inner">
-    <a href={url('/')} class="nav__logo" aria-label="NLCCS — naar de homepage">
+    <a href={url('/')} class="nav__logo">
       <img
         src={url('/logo.svg')}
-        alt="Nederlands Centrum voor Curriculumstudies"
-        width="220"
-        height="75"
+        alt=""
+        aria-hidden="true"
+        width="36"
+        height="52"
         loading="eager"
+        class="nav__logo-mark"
       />
+      <span class="nav__logo-name">
+        <span class="nav__logo-name-top">Nederlands Centrum voor</span>
+        <span class="nav__logo-name-bottom">Curriculumstudies</span>
+      </span>
     </a>
     <nav aria-label="Hoofdnavigatie">
       <ul class="nav__links">
@@ -25,13 +37,11 @@ const leergangen = leergangEntries
         <li class="nav__item nav__item--has-dropdown">
           <a href={url('/#leergangen')} class="nav__link">Leergangen</a>
           <ul class="nav__dropdown">
-            <div class="nav__dropdown-box">
-              {leergangen.map(({ title, slug }) => (
-                <li>
-                  <a href={url(`/leergang/${slug}/`)} class="nav__dropdown-link">{title}</a>
-                </li>
-              ))}
-            </div>
+            {leergangen.map(({ title, slug }) => (
+              <li>
+                <a href={url(`/leergang/${slug}/`)} class="nav__dropdown-link">{title}</a>
+              </li>
+            ))}
           </ul>
         </li>
         <li class="nav__item"><a href={url('/#over-ons')} class="nav__link">Over ons</a></li>
@@ -46,7 +56,7 @@ const leergangen = leergangEntries
     top: 0;
     z-index: 100;
     background: var(--color-white);
-    border-bottom: 2px solid var(--color-bg-warm-dark);
+    border-bottom: 2px solid var(--color-bg-tinted-dark);
     height: var(--nav-height);
   }
 
@@ -57,11 +67,48 @@ const leergangen = leergangEntries
     height: 100%;
   }
 
-  .nav__logo img {
-    height: 72px;
-    width: auto;
+  /* Logo: mark + text side by side */
+  .nav__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    text-decoration: none;
+    color: var(--color-primary);
   }
 
+  .nav__logo:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm);
+  }
+
+  .nav__logo-mark {
+    height: 60px;
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  .nav__logo-name {
+    font-family: 'Open Sans', sans-serif;
+    font-size: .9rem;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    color: var(--color-primary);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav__logo-name-top {
+    font-size: 1em;
+    font-weight: 350;
+  }
+
+  .nav__logo-name-bottom {
+    font-size: 1.38em;
+    font-weight: 400;
+  }
+
+  /* Nav links */
   .nav__links {
     display: flex;
     align-items: stretch;
@@ -82,13 +129,19 @@ const leergangen = leergangEntries
     text-decoration: none;
     color: var(--color-primary);
     letter-spacing: 0.02em;
-    padding-block: 0.25rem;
+    padding-block: var(--space-xs);
     border-bottom: 2px solid transparent;
     transition: border-color 0.2s;
   }
 
   .nav__link:hover {
     border-bottom-color: var(--color-primary);
+  }
+
+  .nav__link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm);
   }
 
   /* Dropdown */
@@ -98,15 +151,10 @@ const leergangen = leergangEntries
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    /* padding-top fills the gap between li bottom and nav bottom edge,
-       keeping hover alive the entire way down */
-    padding-top: 0.75rem;
+    padding-top: var(--space-sm);
     list-style: none;
     min-width: 280px;
     z-index: 200;
-  }
-
-  .nav__dropdown-box {
     border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: 0 6px 20px rgba(0,0,0,0.10);
@@ -126,11 +174,16 @@ const leergangen = leergangEntries
   }
 
   .nav__dropdown-link:hover {
-    background: var(--color-bg-warm-dark);
+    background: var(--color-bg-tinted-dark);
     border-left-color: var(--color-primary);
   }
 
-  /* Show on li:hover so the full area (link + dropdown) keeps hover alive */
+  .nav__dropdown-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: -2px;
+  }
+
+  /* Show on hover */
   .nav__item--has-dropdown:hover > .nav__link {
     border-bottom-color: var(--color-primary);
   }
