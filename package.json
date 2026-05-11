@@ -15,6 +15,7 @@
   "dependencies": {
     "@sveltia/cms": "^0.159.1",
     "astro": "^6.2.2",
-    "date-fns": "^4.1.0"
+    "date-fns": "^4.1.0",
+    "marked": "^18.0.3"
   }
 }

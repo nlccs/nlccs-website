@@ -241,6 +241,53 @@ const timeLabel    = formatTimeRange(timeStart, timeEnd);
     color: var(--color-text);
   }
 
+  .detail-page__content :global(ul),
+  .detail-page__content :global(ol) {
+    margin-bottom: var(--space-sm);
+    padding-left: var(--space-sm);
+    color: var(--color-text);
+  }
+
+  .detail-page__content :global(ul) {
+    list-style: none;
+  }
+
+  .detail-page__content :global(ul li) {
+    position: relative;
+    padding-left: var(--space-sm);
+  }
+
+  .detail-page__content :global(ul li)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 5px;
+    height: 5px;
+    background: var(--color-text-muted);
+    border-radius: 50%;
+  }
+
+  .detail-page__content :global(li) {
+    margin-bottom: var(--space-2xs);
+    line-height: 1.7;
+  }
+
+  .detail-page__content :global(li p) {
+    margin-bottom: 0;
+  }
+
+  .detail-page__content :global(strong) {
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .detail-page__content :global(h3) {
+    color: var(--color-primary);
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-xs);
+  }
+
   .detail-page__sfeer {
     margin-top: var(--space-md);
     margin-bottom: var(--space-md);

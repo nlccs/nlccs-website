@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import DetailLayout from '../../layouts/DetailLayout.astro';
-import Paragraphs from '../../components/Paragraphs.astro';
+import { marked } from 'marked';
 
 export async function getStaticPaths() {
   const entries = await getCollection('leergangen');
@@ -18,6 +18,7 @@ interface Props {
 
 const { entry } = Astro.props;
 const { title, startdatum, location, cost, level, studielast, deelnemers, aanmeld_url, intro, sfeerfoto, body } = entry.data;
+const bodyHtml = body ? await marked(body) : '';
 ---
 
 <DetailLayout
@@ -37,5 +38,5 @@ const { title, startdatum, location, cost, level, studielast, deelnemers, aanmel
   {sfeerfoto}
   {intro}
 >
-  <Paragraphs text={body} />
+  {bodyHtml && <Fragment set:html={bodyHtml} />}
 </DetailLayout>

@@ -46,7 +46,7 @@ collections:
         media_folder: /public/masterclasses
         public_folder: /masterclasses
         hint: "Wordt weergegeven onder de inhoudstekst"
-      - { label: Inhoud, name: body, widget: text, required: false }
+      - { label: Inhoud, name: body, widget: richtext, required: false }
 
   - name: leergangen
     label: Leergangen
@@ -78,7 +78,7 @@ collections:
         required: false
         media_folder: /public/masterclasses
         public_folder: /masterclasses
-      - { label: Omschrijving, name: body, widget: text }
+      - { label: Omschrijving, name: body, widget: richtext, required: false }
 
   - name: team
     label: Team

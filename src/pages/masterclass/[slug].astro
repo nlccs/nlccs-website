@@ -2,8 +2,8 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import DetailLayout from '../../layouts/DetailLayout.astro';
-import Paragraphs from '../../components/Paragraphs.astro';
 import { url } from '../../utils/url';
+import { marked } from 'marked';
 
 export async function getStaticPaths() {
   const entries = await getCollection('masterclasses');
@@ -19,6 +19,7 @@ interface Props {
 
 const { entry } = Astro.props;
 const { title, type, date, time_start, time_end, location, cost, level, studielast, deelnemers, accreditation, aanmeld_url, sfeerfoto, intro, body } = entry.data;
+const bodyHtml = body ? await marked(body) : '';
 ---
 
 <DetailLayout
@@ -41,5 +42,5 @@ const { title, type, date, time_start, time_end, location, cost, level, studiela
   {sfeerfoto}
   {intro}
 >
-  {body && <Paragraphs text={body} />}
+  {bodyHtml && <Fragment set:html={bodyHtml} />}
 </DetailLayout>
