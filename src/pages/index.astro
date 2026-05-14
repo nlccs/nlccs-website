@@ -4,9 +4,27 @@ import Hero from '../components/Hero.astro';
 import Agenda from '../components/Agenda.astro';
 import Leergangen from '../components/Leergangen.astro';
 import OverOns from '../components/OverOns.astro';
+
+const siteUrl = 'https://www.nlccs.nl';
+
+const organizationLd = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOrganization',
+  name: 'Nederlands Centrum voor Curriculumstudies',
+  alternateName: 'NLCCS',
+  url: siteUrl,
+  logo: `${siteUrl}/og-default.png`,
+  email: 'info@nlccs.nl',
+  description: 'NLCCS biedt masterclasses en post-hbo leergangen voor schoolleiders en leraren op het gebied van curriculumontwikkeling en onderwijskwaliteit.',
+  areaServed: 'NL',
+  knowsAbout: ['curriculumontwikkeling', 'onderwijskwaliteit', 'schoolleiderschap', 'didactiek'],
+};
 ---
 
 <BaseLayout>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(organizationLd)} />
+  </Fragment>
   <Hero />
   <Agenda />
   <Leergangen />
