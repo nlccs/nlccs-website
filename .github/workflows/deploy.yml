@@ -36,3 +36,16 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  indexnow:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Submit sitemap URLs to IndexNow
+        uses: jakob-bagterp/index-now-submit-sitemap-urls-action@v1
+        with:
+          host: www.nlccs.nl
+          api_key: ${{ secrets.INDEXNOW_API_KEY }}
+          api_key_location: https://www.nlccs.nl/${{ secrets.INDEXNOW_API_KEY }}.txt
+          sitemap_locations: https://www.nlccs.nl/sitemap-index.xml
+          endpoint: bing
