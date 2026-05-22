@@ -5,6 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>NLCCS Admin</title>
     <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
+    <style>
+      /*
+       * NLCCS theme for Sveltia CMS
+       * Primary navy: #131d77  (hue ≈ 234°)
+       * Accent red:   #8b1a1a
+       */
+      :root {
+        /* Shift the entire SUI colour system to NLCCS navy */
+        --sui-base-hue: 234;
+
+        /* Primary accent — buttons, active states, highlights */
+        --sui-primary-accent-color:             #131d77;
+        --sui-primary-accent-color-dark:        #0d1560;
+        --sui-primary-accent-color-light:       #1e2d99;
+        --sui-primary-accent-color-translucent: rgba(19, 29, 119, 0.12);
+        --sui-primary-accent-color-inverted:    #ffffff;
+        --sui-primary-accent-color-text:        #ffffff;
+        --sui-primary-accent-text-color:        #ffffff;
+
+        /* Primary buttons */
+        --sui-button-primary-background-color:        #131d77;
+        --sui-button-primary-background-color-active: #0d1560;
+        --sui-button-primary-background-color-focus:  #1e2d99;
+        --sui-button-primary-border-color:            #131d77;
+        --sui-button-primary-foreground-color:        #ffffff;
+        --sui-button-primary-foreground-color-active: #ffffff;
+        --sui-button-primary-foreground-color-focus:  #ffffff;
+
+        /* Links and ghost buttons */
+        --sui-button-link-foreground-color: #131d77;
+
+        /* Focus ring */
+        --sui-focus-ring-color: #131d77;
+
+        /* Checkboxes */
+        --sui-checkbox-background-color-checked: #131d77;
+        --sui-checkbox-border-color-checked:     #131d77;
+      }
+    </style>
   </head>
   <body>
     <script src="/admin/sveltia-cms.js"></script>

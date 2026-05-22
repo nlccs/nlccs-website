@@ -7,6 +7,9 @@ backend:
   base_url: https://nlccs-auth.ivar-634.workers.dev
   auth_methods: [oauth]
 
+logo_url: /logo.svg
+site_url: https://www.nlccs.nl
+
 # Media (team photos) are committed to the repo under public/team/
 media_folder: public/team
 public_folder: /team
