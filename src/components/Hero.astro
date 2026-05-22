@@ -1,18 +1,19 @@
 ---
 import { url } from '../utils/url';
+
+interface Props {
+  introTitle: string;
+  introBody: string;
+}
+
+const { introTitle, introBody } = Astro.props;
 ---
 
 <section class="hero section--primary">
   <div class="container hero__inner">
     <div class="hero__text">
-      <h1 class="hero__title">Nederlands Centrum voor Curriculumstudies</h1>
-      <p class="hero__lead">
-        NLCCS is een opleidings- en kennisinstituut voor schoolleiders en leraren, opgericht door
-        Tjip de Jong, Sarah Bergsen en Erik Meester. Wij ontwikkelen en verzorgen in samenwerking
-        met deskundige gastdocenten hoogwaardige leergangen, masterclasses en
-        professionaliseringstrajecten waarin wetenschappelijke inzichten worden geconcretiseerd naar
-        kansrijke interventies, die zich elders ook al in de onderwijspraktijk bewezen hebben.
-      </p>
+      <h1 class="hero__title">{introTitle}</h1>
+      <p class="hero__lead">{introBody}</p>
       <div class="hero__cta">
         <a href={url('/#agenda')} class="btn btn--light">Bekijk de agenda</a>
         <a href={url('/#leergangen')} class="btn btn--outline">Onze leergangen</a>

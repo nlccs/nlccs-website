@@ -11,6 +11,22 @@ media_folder: public/team
 public_folder: /team
 
 collections:
+  - name: instellingen
+    label: Instellingen
+    files:
+      - name: homepage
+        label: Homepage
+        file: src/content/instellingen/homepage.yaml
+        fields:
+          - { label: "Introductie — titel", name: intro_title, widget: string }
+          - { label: "Introductie — tekst", name: intro_body, widget: text }
+          - { label: "Over ons — titel", name: over_ons_title, widget: string }
+          - label: "Over ons — tekst"
+            name: over_ons_body
+            widget: richtext
+            buttons: [bold, italic, link, bulleted-list, numbered-list]
+            editor_components: []
+
   - name: masterclasses
     label: Masterclasses
     label_singular: Masterclass

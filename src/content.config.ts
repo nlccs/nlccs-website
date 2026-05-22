@@ -45,6 +45,16 @@ const leergangen = defineCollection({
   }),
 });
 
+const instellingen = defineCollection({
+  loader: glob({ pattern: '**/*.yaml', base: './src/content/instellingen' }),
+  schema: z.object({
+    intro_title: z.string(),
+    intro_body: z.string(),
+    over_ons_title: z.string(),
+    over_ons_body: z.string(),
+  }),
+});
+
 const team = defineCollection({
   loader: glob({ pattern: '**/*.yaml', base: './src/content/team' }),
   schema: z.object({
@@ -56,4 +66,4 @@ const team = defineCollection({
   }),
 });
 
-export const collections = { masterclasses, leergangen, team };
+export const collections = { masterclasses, leergangen, team, instellingen };

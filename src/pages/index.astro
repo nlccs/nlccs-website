@@ -1,4 +1,6 @@
 ---
+import { getEntry } from 'astro:content';
+import { marked } from 'marked';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import Agenda from '../components/Agenda.astro';
@@ -6,6 +8,8 @@ import Leergangen from '../components/Leergangen.astro';
 import OverOns from '../components/OverOns.astro';
 
 const siteUrl = 'https://www.nlccs.nl';
+const homepage = await getEntry('instellingen', 'homepage');
+const overOnsHtml = await marked(homepage!.data.over_ons_body);
 
 const organizationLd = {
   '@context': 'https://schema.org',
@@ -25,8 +29,9 @@ const organizationLd = {
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(organizationLd)} />
   </Fragment>
-  <Hero />
+  <Hero introTitle={homepage!.data.intro_title} introBody={homepage!.data.intro_body} />
+
   <Agenda />
   <Leergangen />
-  <OverOns />
+  <OverOns title={homepage!.data.over_ons_title} bodyHtml={overOnsHtml} />
 </BaseLayout>

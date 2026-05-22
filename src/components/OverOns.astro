@@ -2,6 +2,13 @@
 import { getCollection } from 'astro:content';
 import PersonCard from './PersonCard.astro';
 
+interface Props {
+  title: string;
+  bodyHtml: string;
+}
+
+const { title, bodyHtml } = Astro.props;
+
 const entries = await getCollection('team');
 const team = entries
   .map(e => e.data)
@@ -10,20 +17,8 @@ const team = entries
 
 <section id="over-ons" class="section">
   <div class="container">
-    <h2 class="over-ons__heading">Over ons</h2>
-    <p class="over-ons__intro">
-      Vakinhoud, professionaliteit en menselijke relatie zijn voor ons heel belangrijk. Dat betekent
-      dat het tijdens onze bijeenkomsten echt altijd ergens over gaat, dat we steeds op zoek gaan
-      naar manieren om ons eigen handelen te verbeteren en dat we zorgdragen voor een persoonlijke
-      sfeer. We houden dus van theorie, maar hechten ook veel waarde aan de concrete vertaling van
-      de theorie naar de praktijk. Tot slot is discipline voor ons een essentieel concept.
-      Professionaliseren is een serieus proces, dat vraagt om serieuze toewijding en inzet, van
-      zowel ons als docenten als onze cursisten. No pain, no gain!
-    </p>
-    <p class="over-ons__sub">
-      De hoofddocenten zijn Tjip de Jong, Sarah Bergsen en Erik Meester. Wij werken graag samen met
-      een grote diversiteit aan deskundige gastdocenten.
-    </p>
+    <h2 class="over-ons__heading">{title}</h2>
+    <div class="over-ons__body" set:html={bodyHtml} />
     <div class="over-ons__grid">
       {team.map((person) => (
         <PersonCard name={person.name} photo={person.photo} bio={person.bio} email={person.email} />
@@ -38,15 +33,18 @@ const team = entries
     margin-bottom: var(--space-md);
   }
 
-  .over-ons__intro {
-    max-width: 72ch;
-    margin-bottom: var(--space-sm);
-    line-height: 1.8;
-  }
-
-  .over-ons__sub {
+  .over-ons__body {
     max-width: 72ch;
     margin-bottom: var(--space-lg);
+  }
+
+  .over-ons__body :global(p) {
+    line-height: 1.8;
+    margin-bottom: var(--space-sm);
+  }
+
+  .over-ons__body :global(p:last-child) {
+    margin-bottom: 0;
     font-style: italic;
     color: var(--color-text-muted);
   }
