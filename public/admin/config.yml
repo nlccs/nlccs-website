@@ -9,6 +9,7 @@ backend:
 
 logo_url: /logo-white.svg
 site_url: https://www.nlccs.nl
+app_title: NLCCS CMS
 
 # Media (team photos) are committed to the repo under public/team/
 media_folder: public/team
