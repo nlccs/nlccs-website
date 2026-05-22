@@ -2,7 +2,7 @@
   "name": "nlccs-website",
   "type": "module",
   "version": "0.0.1",
-  "packageManager": "pnpm@11.0.4",
+  "packageManager": "pnpm@11.2.2",
   "engines": {
     "node": ">=24.0.0",
     "pnpm": ">=11"
@@ -16,9 +16,9 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
-    "@sveltia/cms": "^0.159.1",
-    "astro": "^6.2.2",
-    "date-fns": "^4.1.0",
-    "marked": "^18.0.3"
+    "@sveltia/cms": "^0.163.0",
+    "astro": "^6.3.7",
+    "date-fns": "^4.2.1",
+    "marked": "^18.0.4"
   }
 }
