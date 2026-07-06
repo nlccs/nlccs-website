@@ -1,0 +1,436 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { url } from '../utils/url';
+
+interface Props {
+  title: string;
+  description: string;
+  eyebrow?: string;
+  version?: string;
+  versionDate?: string;
+  pdfHref: string;
+  bodyHtml: string;
+}
+
+const {
+  title,
+  description,
+  eyebrow = 'Juridische informatie',
+  version,
+  versionDate,
+  pdfHref,
+  bodyHtml,
+} = Astro.props;
+
+// ── Build a table of contents from the <h2> headings in the body ──
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+
+// Split a heading label into a leading marker ("8.", "Artikel 19") that gets
+// emphasised, and the remaining text.
+const splitMarker = (label: string): { marker: string; rest: string } => {
+  const numeric = label.match(/^(\d+[.)])\s+(.*)$/);
+  if (numeric) return { marker: numeric[1], rest: numeric[2] };
+  // "Artikel 19 – Gebruik…" → show just "19." in the TOC, like the numbered pages
+  const artikel = label.match(/^Artikel\s+(\d+)\s*[–-]\s*(.*)$/i);
+  if (artikel) return { marker: `${artikel[1]}.`, rest: artikel[2] };
+  return { marker: '', rest: label };
+};
+
+const toc: { id: string; marker: string; rest: string }[] = [];
+const seenIds = new Set<string>();
+
+const contentHtml = bodyHtml.replace(
+  /<h2([^>]*)>([\s\S]*?)<\/h2>/g,
+  (_match, attrs: string, inner: string) => {
+    const label = inner
+      .replace(/<[^>]+>/g, '')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const base = slugify(label) || 'sectie';
+    let id = base;
+    let n = 2;
+    while (seenIds.has(id)) id = `${base}-${n++}`;
+    seenIds.add(id);
+    toc.push({ id, ...splitMarker(label) });
+    return `<h2${attrs} id="${id}">${inner}</h2>`;
+  },
+);
+---
+
+<BaseLayout {title} {description}>
+  <article class="doc-page">
+    <header class="doc-page__header section--primary">
+      <div class="container">
+        <a href={url('/')} class="doc-page__back"><span aria-hidden="true">←</span> Terug naar de website</a>
+        <p class="doc-page__eyebrow">{eyebrow}</p>
+        <h1 class="doc-page__title">{title}</h1>
+        <div class="doc-page__meta">
+          {version && (
+            <span class="doc-page__version">
+              Versie {version}{versionDate ? ` · ${versionDate}` : ''}
+            </span>
+          )}
+          <a
+            href={pdfHref}
+            class="doc-page__pdf-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="doc-page__pdf-icon">
+              <path fill-rule="evenodd" d="M3 17a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1Zm3.293-7.707a1 1 0 0 1 1.414 0L9 10.586V3a1 1 0 1 1 2 0v7.586l1.293-1.293a1 1 0 1 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414Z" clip-rule="evenodd" />
+            </svg>
+            Download als PDF
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class:list={['doc-page__body', 'container', { 'doc-page__body--with-toc': toc.length > 0 }]}>
+      {toc.length > 0 && (
+        <aside class="doc-toc" aria-label="Inhoudsopgave">
+          <p class="doc-toc__title">Inhoud</p>
+          <nav>
+            <ol class="doc-toc__list">
+              {toc.map((item) => (
+                <li>
+                  <a class="doc-toc__link" href={`#${item.id}`}>
+                    {item.marker && <span class="doc-toc__marker" data-marker={item.marker}>{item.marker}</span>}{item.rest}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </aside>
+      )}
+      <div class="doc-page__content" set:html={contentHtml} />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  /* ── Header (matches the app's detail-page header) ── */
+  .doc-page__header {
+    padding-block: var(--space-lg);
+  }
+
+  .doc-page__back {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    margin-bottom: var(--space-sm);
+    transition: color 0.2s;
+  }
+
+  .doc-page__back:hover { color: var(--color-white); }
+
+  .doc-page__back:focus-visible {
+    outline: 2px solid var(--color-highlight);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+
+  .doc-page__eyebrow {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: var(--space-2xs);
+  }
+
+  .doc-page__title {
+    color: var(--color-white);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .doc-page__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  .doc-page__version {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-highlight);
+    background: rgba(255, 255, 255, 0.12);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .doc-page__pdf-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-white);
+    text-decoration: none;
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    border-radius: var(--radius-sm);
+    padding: 0.4rem 0.85rem;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+
+  .doc-page__pdf-link:hover {
+    background: var(--color-white);
+    color: var(--color-primary);
+    border-color: var(--color-white);
+  }
+
+  .doc-page__pdf-link:focus-visible {
+    outline: 2px solid var(--color-highlight);
+    outline-offset: 3px;
+  }
+
+  .doc-page__pdf-icon { width: 1rem; height: 1rem; flex-shrink: 0; }
+
+  /* ── Document body ── */
+  .doc-page__body {
+    padding-block: var(--space-lg);
+  }
+
+  .doc-page__content { max-width: 760px; }
+
+  /* ── Table of contents — sticky left column on desktop ── */
+  .doc-toc { display: none; }
+
+  @media (min-width: 1024px) {
+    .doc-page__body--with-toc {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    .doc-toc {
+      display: block;
+      position: sticky;
+      top: calc(var(--nav-height) + var(--space-sm));
+      max-height: calc(100vh - var(--nav-height) - var(--space-md));
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+  }
+
+  .doc-toc__title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-sm);
+  }
+
+  .doc-toc__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    border-left: 2px solid var(--color-bg-tinted);
+  }
+
+  .doc-toc__link {
+    display: block;
+    padding: 0.3rem var(--space-xs) 0.3rem var(--space-sm);
+    margin-left: -2px;
+    border-left: 2px solid transparent;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+
+  /* Only the active item's marker is bold. A hidden bold "ghost" reserves the
+     bold width so toggling weight never shifts the text (no reflow). */
+  .doc-toc__marker {
+    display: inline-block;
+    margin-right: 0.35em;
+  }
+
+  .doc-toc__marker::before {
+    content: attr(data-marker);
+    display: block;
+    height: 0;
+    overflow: hidden;
+    font-weight: 700;
+    visibility: hidden;
+  }
+
+  .doc-toc__link.is-active .doc-toc__marker { font-weight: 700; }
+
+  .doc-toc__link:hover { color: var(--color-primary); }
+
+  .doc-toc__link.is-active {
+    color: var(--color-primary);
+    border-left-color: var(--color-primary);
+    background: rgba(1, 58, 99, 0.06);
+  }
+
+  .doc-toc__link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  .doc-page__content :global(h2) {
+    font-size: 1.05rem;
+    color: var(--color-primary);
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-xs);
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--color-bg-tinted);
+    /* Extra breathing room below the sticky nav when jumped to from the TOC */
+    scroll-margin-top: var(--space-sm);
+  }
+
+  .doc-page__content :global(p) {
+    margin-bottom: 0.4rem;
+    color: var(--color-text);
+    line-height: 1.65;
+  }
+
+  .doc-page__content :global(.doc-label) {
+    font-weight: 600;
+    margin-top: var(--space-md);
+    margin-bottom: 0.2rem;
+    color: var(--color-text);
+  }
+
+  .doc-page__content :global(.doc-ul) {
+    list-style: disc;
+    padding-left: 1.4rem;
+    margin-bottom: 0.4rem;
+    color: var(--color-text);
+    line-height: 1.65;
+  }
+
+  /* Plain nested lists (examenreglement, privacy) keep a marker */
+  .doc-page__content :global(.doc-ul--sub) {
+    list-style: circle;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+
+  /* Lettered nested lists (algemene voorwaarden) carry "a. b. c." in the text */
+  .doc-page__content :global(.doc-ul--lettered) {
+    list-style: none;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+    padding-left: 0.5rem;
+  }
+
+  /* Step every nested list in by one clear level so hierarchy doesn't read as flat */
+  .doc-page__content :global(li > .doc-ul),
+  .doc-page__content :global(li > .doc-ol) {
+    margin-left: var(--space-sm);
+  }
+
+  .doc-page__content :global(.doc-ul li + li) { margin-top: 0.25rem; }
+
+  .doc-page__content :global(.doc-ol) {
+    list-style: decimal;
+    padding-left: 1.4rem;
+    margin-bottom: 0.4rem;
+    color: var(--color-text);
+    line-height: 1.65;
+  }
+
+  .doc-page__content :global(.doc-ol li + li) { margin-top: 0.25rem; }
+
+  .doc-page__content :global(a) {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>
+
+<script>
+  // Scrollspy: highlight the table-of-contents link for the section the
+  // reader is currently viewing, using IntersectionObserver.
+  const initDocToc = () => {
+    const toc = document.querySelector('.doc-toc');
+    const content = document.querySelector('.doc-page__content');
+    if (!toc || !content) return;
+
+    const links = Array.from(
+      toc.querySelectorAll<HTMLAnchorElement>('.doc-toc__link'),
+    );
+    const headings = Array.from(content.querySelectorAll<HTMLElement>('h2[id]'));
+    if (!links.length || !headings.length) return;
+
+    const idOf = (link: HTMLAnchorElement) =>
+      decodeURIComponent(link.hash.slice(1));
+
+    let activeId: string | null = null;
+    const setActive = (id: string) => {
+      if (id === activeId) return;
+      activeId = id;
+      for (const link of links) {
+        const isActive = idOf(link) === id;
+        link.classList.toggle('is-active', isActive);
+        if (isActive) link.setAttribute('aria-current', 'true');
+        else link.removeAttribute('aria-current');
+      }
+    };
+
+    const navHeight =
+      parseInt(
+        getComputedStyle(document.documentElement).getPropertyValue(
+          '--nav-height',
+        ),
+        10,
+      ) || 96;
+
+    const visible = new Set<HTMLElement>();
+    const pickActive = () => {
+      if (visible.size) {
+        // Highlight the topmost heading currently inside the active band.
+        const topmost = Array.from(visible).sort(
+          (a, b) => a.offsetTop - b.offsetTop,
+        )[0];
+        setActive(topmost.id);
+        return;
+      }
+      // Nothing in the band → highlight the last heading scrolled past.
+      let current = headings[0];
+      for (const h of headings) {
+        if (h.getBoundingClientRect().top <= navHeight + 1) current = h;
+        else break;
+      }
+      setActive(current.id);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) visible.add(entry.target as HTMLElement);
+          else visible.delete(entry.target as HTMLElement);
+        }
+        pickActive();
+      },
+      { rootMargin: `-${navHeight}px 0px -70% 0px`, threshold: 0 },
+    );
+
+    headings.forEach((h) => observer.observe(h));
+    pickActive();
+  };
+
+  initDocToc();
+</script>
