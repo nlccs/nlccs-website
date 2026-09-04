@@ -6,13 +6,20 @@ import { url } from '../utils/url';
   <div class="container footer__inner">
     <div class="footer__left">
       <p class="footer__name">Nederlands Centrum voor Curriculumstudies</p>
-      <a href="mailto:info@nlccs.nl" class="footer__mail">
-        <svg class="footer__mail-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-          <path d="M3 4a1 1 0 0 0-1 1v.586l8 5.333 8-5.333V5a1 1 0 0 0-1-1H3Z"/>
-          <path d="M18 7.414l-7.447 4.964a1 1 0 0 1-1.106 0L2 7.414V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7.414Z"/>
-        </svg>
-        info@nlccs.nl
-      </a>
+      <div class="footer__subtitle">
+        <a href="https://www.crkbo.nl/" class="footer__cert" target="_blank">
+          <img src="/CRKBO_Instelling_CMYK.svg"  alt="CRKBO" class="CRKBO-logo"/>
+          <p>CRKBO gecertificeerde instelling</p>
+        </a>
+        <div class="footer__separator">·</div>
+        <a href="mailto:info@nlccs.nl" class="footer__mail">
+            <svg class="footer__mail-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M3 4a1 1 0 0 0-1 1v.586l8 5.333 8-5.333V5a1 1 0 0 0-1-1H3Z"/>
+                <path d="M18 7.414l-7.447 4.964a1 1 0 0 1-1.106 0L2 7.414V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7.414Z"/>
+            </svg>
+            info@nlccs.nl
+        </a>
+      </div>
     </div>
     <nav class="footer__legal" aria-label="Juridische informatie">
       <a href={url('/algemene-voorwaarden/')} class="footer__legal-link">Algemene voorwaarden</a>
@@ -106,7 +113,53 @@ import { url } from '../utils/url';
     color: rgba(255, 255, 255, 0.65);
   }
 
-  @media (max-width: 700px) {
+
+  .footer__subtitle {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    transition: opacity 0.2s;
+  }
+  .footer__separator {
+    opacity: 0.75;
+  }
+
+  a.footer__cert {
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    opacity: 0.75;
+    img.CRKBO-logo {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: 4px;
+      --size: 20px;
+      width: var(--size);
+      height: var(--size);
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  @media(max-width: 1024px) {
+    .footer__subtitle {
+      flex-direction: column;
+      align-items: flex-start;
+      .footer__separator {
+        display: none;
+      }
+      .footer__mail-icon {
+        margin: 0 6px 0 2px;
+      }
+    }
+  }
+
+  @media (max-width: 900px) {
     .footer__inner {
       grid-template-columns: 1fr;
       gap: var(--space-sm);
